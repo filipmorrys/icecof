@@ -1,9 +1,10 @@
+<!-- NAVBAR -->
 <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
     aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#">Navbar</a>
+  <a class="navbar-brand" href="#">Simulador Icecof</a>
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
@@ -23,75 +24,142 @@
   </div>
 </nav>
 <br>
-<!-- FORMULARIO -->
-<div class="row">
-  <div class="col-1"></div>
-  <div class="col-3">
-    <div class="form-group">
-      <label for="exampleInputEmail1">Código</label>
-      <input type="email" class="form-control" placeholder="Introduzca Código">
+<!-- /NAVBAR -->
+
+<!-- FORMULARIO NUEVO -->
+<app-issues></app-issues>
+
+<br>
+<div class="container card card-outline-secondary">
+  <br>
+  <blockquote class="blockquote">
+    <h3>Creación de Incidencia</h3>
+  </blockquote>
+  <hr>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Código</label>
+        <input type="email" class="form-control" placeholder="Introduzca Código">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Descripción</label>
+        <input type="email" class="form-control" placeholder="Introduzca Descripción">
+      </div>
     </div>
   </div>
-  <div class="col-3">
-    <div class="form-group">
-      <label for="exampleInputEmail1">Descripción</label>
-      <input type="email" class="form-control" placeholder="Introduzca Descripción">
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Tipo</label>
+        <select name="" id="" class="form-control">
+          <option value="">01</option>
+          <option value="">02</option>
+          <option value="">03</option>
+          <option value="">04</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Subtipo</label>
+        <select name="" id="" class="form-control">
+          <option value="">01</option>
+          <option value="">02</option>
+          <option value="">03</option>
+          <option value="">04</option>
+        </select>
+      </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Estado</label>
+        <select name="" id="" class="form-control">
+          <option value="">Abierta</option>
+          <option value="">Cerrada</option>
+          <option value="">Cancelada</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-6">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Nodo Inicial</label>
+        <select name="" id="" class="form-control">
+          <option value="">01</option>
+          <option value="">02</option>
+          <option value="">03</option>
+          <option value="">04</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Nodo final</label>
+        <select name="" id="" class="form-control">
+          <option value="">01</option>
+          <option value="">02</option>
+          <option value="">03</option>
+          <option value="">04</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Hora inicial</label>
+        <input type="text" class="form-control" name="" id="">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Hora final</label>
+        <input type="text" class="form-control" name="" id="">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Hora final esperada</label>
+        <input type="text" class="form-control" name="" id="">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Vías seleccionadas</label>
+        <select multiple name="" id="" class="form-control">
+          <option value="">Via 1 (Saiding 1)</option>
+          <option value="">Via 2 (Saiding 1)</option>
+          <option value="">Via 1 (Saiding 1-Sading 2)</option>
+          <option value="">Via 2 (Saiding 1-Sading 2)</option>
+          <option value="">Via 1 (Saiding 2)</option>
+          <option value="">Via 2 (Saiding 2)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary">Guardar</button>
+      <button class="btn btn-primary">Limpiar</button>
+    </div>
+  </div>
+  <br>
 </div>
-<div class="row">
-  <div class="col-1"></div>
-  <div class="col-3">
-    <div class="form-group">
-      <label for="exampleInputEmail1">Tipo</label>
-      <input type="email" class="form-control" placeholder="Introduzca Tipo">
-    </div>
-  </div>
-  <div class="col-3">
-    <div class="form-group">
-      <label for="exampleInputEmail1">Subtipo</label>
-      <input type="email" class="form-control" placeholder="introduzca Subtipo">
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-1"></div>
-  <div class="col-3">
-    <div class="form-group">
-      <label for="exampleSelect1">Estado</label>
-      <select class="form-control" id="exampleSelect1">
-        <option>Abierta</option>
-        <option>Cerrada</option>
-        <option>Cancelada</option>
-      </select>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-1"></div>
-  <div class="col-3">
-    <div class="form-group">
-      <label for="exampleSelect1">Nodo inicial</label>
-      <select class="form-control" id="exampleSelect1">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-      </select>
-    </div>
-  </div>
-  <div class="col-3">
-    <div class="form-group">
-      <label for="exampleSelect1">Nodo final</label>
-      <select class="form-control" id="exampleSelect1">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-      </select>
-    </div>
-  </div>
-</div>
-<!-- /FORMULARIO -->
+<!-- /FORMULARIO NUEVO -->
+<br>
