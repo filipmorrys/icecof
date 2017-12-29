@@ -19,10 +19,10 @@ export class Issue {
     state: IssueState;
 
     /** Nodo inicial */
-    initialNode: string;
+    initialNode: Node;
 
     /** Nodo final */
-    finalNode: string;
+    finalNode: Node;
 
     /** Hora inicial */
     initialHour: string;

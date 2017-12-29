@@ -1,48 +1,40 @@
 <!-- LISTADO DE ISSUES -->
 <div class="container card card-outline-secondary">
-    <br>
-    <blockquote class="blockquote">
-      <h3>Listado de Incidencias</h3>
-    </blockquote>
-    <div class="row">
-      <div class="col">
-        <table class="table table-bordered">
-          <thead class="thead-inverse">
-            <tr>
-              <th>Código Incidencia</th>
-              <th>Nodo Inicio</th>
-              <th>Nodo Fin</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td scope="row">Pepito</td>
-              <td>Saiding 1</td>
-              <td>Saiding 6</td>
-              <td>
-                <input type="checkbox" class="form-control" name="" id="">
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">Fulanito</td>
-              <td>Medinah</td>
-              <td>Meca</td>
-              <td>
-                <input type="checkbox" class="form-control" name="" id="">
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <br>
+  <blockquote class="blockquote">
+    <h3>Listado de Incidencias</h3>
+  </blockquote>
+  <div class="row">
+    <div class="col">
+      <table class="table table-bordered">
+        <thead class="thead-inverse">
+          <tr>
+            <th>Código Incidencia</th>
+            <th>Nodo Inicio</th>
+            <th>Nodo Fin</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let issue of issues">
+            <td scope="row">{{issue.code}}</td>
+            <td>{{issue.initialNode.name}}</td>
+            <td>{{issue.finalNode.name}}</td>
+            <td>
+              <input type="checkbox" class="form-control" name="" id="">
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="row">
-      <div class="col">
-        <button class="btn btn-primary">Nueva</button>
-        <button class="btn btn-primary">Editar</button>
-        <button class="btn btn-primary">Eliminar</button>
-      </div>
-    </div>
-    <br>
   </div>
-  <!-- /LISTADO DE ISSUES -->
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary">Nueva</button>
+      <button class="btn btn-primary">Editar</button>
+      <button class="btn btn-primary">Eliminar</button>
+    </div>
+  </div>
+  <br>
+</div>
+<!-- /LISTADO DE ISSUES -->
