@@ -85,3 +85,10 @@ export enum TrackType {
     Station, 
     Circulation
 }
+
+export enum ComponentState {
+    NewIssue,
+    EditIssue,
+    ConsultIssue,
+    None  
+}

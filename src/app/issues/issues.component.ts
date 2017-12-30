@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Issue, IssueState, TrackType } from './issues.model';
+import { Issue, IssueState, TrackType, ComponentState } from './issues.model';
 import { initDomAdapter } from '@angular/platform-browser/src/browser';
+import { ViewChild } from '@angular/core';
+import { ElementRef } from '@angular/core';
+import { Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-issues',
@@ -14,9 +17,20 @@ export class IssuesComponent implements OnInit {
    */
   issues:Array<Issue>; 
 
-  constructor() { }
+  componentState: ComponentState;
+
+  issueSelected: Issue;
+
+  indexSelected: number;
+
+  constructor(private renderer: Renderer2) { }
 
   ngOnInit() {
+
+    this.indexSelected = -1;
+
+    this.componentState = ComponentState.None;
+
     this.issues = [
       {
         code: 'Issue 1',
@@ -71,13 +85,30 @@ export class IssuesComponent implements OnInit {
             mnemonic: 'TRK.MED.1',
             name: '1ST',
             trackType: TrackType.Station,
-            initialNode: 'ND.MED',
+            initialNode: 'ND.',
             finalNode: null
           }
         ]
       }
       
     ];
+  }
+
+  clickRow(i) {
+    if(this.indexSelected != -1) {
+      let tr = document.getElementById('row_'+this.indexSelected);  
+      this.renderer.removeClass(tr, 'selected');
+      this.indexSelected = -1;
+    }
+
+    let tr = document.getElementById('row_'+i);
+    if(tr.classList.contains('selected')) {
+      this.renderer.removeClass(tr, 'selected');
+    } else {
+      this.renderer.addClass(tr, 'selected');
+      this.indexSelected = i;
+    }
+    console.log(tr);
   }
 }
 

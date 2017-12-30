@@ -4,12 +4,14 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { IssuesComponent } from './issues/issues.component';
+import { NavComponent } from './nav/nav.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    IssuesComponent
+    IssuesComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule
