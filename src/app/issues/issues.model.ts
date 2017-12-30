@@ -90,5 +90,5 @@ export enum ComponentState {
     NewIssue,
     EditIssue,
     ConsultIssue,
-    None  
+    Default  
 }

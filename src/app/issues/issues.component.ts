@@ -17,19 +17,40 @@ export class IssuesComponent implements OnInit {
    */
   issues:Array<Issue>; 
 
+  /**
+   * Estado en el que se encuentra el commponente, que puede ser:
+   *  - Modo Creación
+   *  - Modo Edición
+   *  - Modo Consulta
+   *  - Modo por defecto
+   */
   componentState: ComponentState;
 
+  /**
+   * Issue seleccionada de la lista de la tabla. 
+   *  - En Modo creación esta variable será una instancia vacía
+   *  - En Modo edición esta variable será la issue que estamos editando
+   *  - En Modo consulta esta variable será la issue que estamos consultando
+   *  - En modo default esta variable sera nula
+   */
   issueSelected: Issue;
 
+  /**
+   * Indice numérico de la Issue que seleccionada. Cuando no haya ninguna issue 
+   * seleccionada esta variable será -1
+   */
   indexSelected: number;
+
+  @ViewChild('tableIssues') tableIssues: ElementRef;
 
   constructor(private renderer: Renderer2) { }
 
   ngOnInit() {
 
+    console.log('Table: '+this.tableIssues);
     this.indexSelected = -1;
 
-    this.componentState = ComponentState.None;
+    this.componentState = ComponentState.Default;
 
     this.issues = [
       {
@@ -94,6 +115,10 @@ export class IssuesComponent implements OnInit {
     ];
   }
 
+  /**
+   * Operación invocada desde la vista cuando se hace click sobre una Issue en la tabla
+   * @param i indice de la Issue sobre la que se ha hecho click
+   */
   clickRow(i) {
     if(this.indexSelected == i) {
       this.deselectRow(i);
@@ -103,6 +128,10 @@ export class IssuesComponent implements OnInit {
     }
   }
 
+  /**
+   * Marca como seleccionada en la tabla la fila con índice i
+   * @param i indice de la fila
+   */
   selectRow(i) {
     if(i == -1) {
       return;
@@ -112,6 +141,10 @@ export class IssuesComponent implements OnInit {
     this.indexSelected = i;
   }
 
+  /**
+   * Deselecciona en la tabla la fila con índice i
+   * @param i indice de la fila
+   */
   deselectRow(i) {
     if(i == -1) {
       return;
