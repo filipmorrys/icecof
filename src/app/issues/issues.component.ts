@@ -95,20 +95,31 @@ export class IssuesComponent implements OnInit {
   }
 
   clickRow(i) {
-    if(this.indexSelected != -1) {
-      let tr = document.getElementById('row_'+this.indexSelected);  
-      this.renderer.removeClass(tr, 'selected');
-      this.indexSelected = -1;
-    }
-
-    let tr = document.getElementById('row_'+i);
-    if(tr.classList.contains('selected')) {
-      this.renderer.removeClass(tr, 'selected');
+    if(this.indexSelected == i) {
+      this.deselectRow(i);
     } else {
-      this.renderer.addClass(tr, 'selected');
-      this.indexSelected = i;
+      this.deselectRow(this.indexSelected)
+      this.selectRow(i);
     }
-    console.log(tr);
   }
+
+  selectRow(i) {
+    if(i == -1) {
+      return;
+    }
+    let tr = document.getElementById('row_'+i);  
+    this.renderer.addClass(tr, 'selected');
+    this.indexSelected = i;
+  }
+
+  deselectRow(i) {
+    if(i == -1) {
+      return;
+    }
+    let tr = document.getElementById('row_'+i);  
+    this.renderer.removeClass(tr, 'selected');
+    this.indexSelected = -1;
+  }
+
 }
 
