@@ -76,9 +76,9 @@ export class Track {
  * Enumerado de tipos de incidencia
  */
 export enum IssueState {
-    Open,
-    Close,
-    Cancelled
+    Open = 0,
+    Close = 1,
+    Cancelled = 2
 }
 
 export enum TrackType {
@@ -87,8 +87,8 @@ export enum TrackType {
 }
 
 export enum ComponentState {
-    NewIssue,
-    EditIssue,
-    ConsultIssue,
-    Default  
+    Default = 0,
+    NewIssue = 1,
+    EditIssue = 2,
+    ConsultIssue = 3
 }

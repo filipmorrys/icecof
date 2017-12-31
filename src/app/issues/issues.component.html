@@ -5,14 +5,13 @@
     <h3>Listado de Incidencias</h3>
   </blockquote>
   <div class="row">
-    <div class="col scrollable">
+    <div class="col scrollable_y">
       <table class="table table-bordered" #tableIssues>
         <thead class="thead-inverse">
           <tr>
             <th>Código Incidencia</th>
             <th>Nodo Inicio</th>
             <th>Nodo Fin</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -20,9 +19,6 @@
             <td scope="row">{{issue.code}}</td>
             <td>{{issue.initialNode.name}}</td>
             <td>{{issue.finalNode.name}}</td>
-            <td>
-              <input type="checkbox" class="form-control" name="" id="">
-            </td>
           </tr>
         </tbody>
       </table>
@@ -30,9 +26,9 @@
   </div>
   <div class="row">
     <div class="col">
-      <button class="btn btn-primary">Nueva</button>
-      <button class="btn btn-primary">Editar</button>
-      <button class="btn btn-primary">Eliminar</button>
+      <button class="btn btn-primary" (click)="createIssue()" [disabled]="componentState == 1 || componentState == 2">Nueva</button>
+      <button class="btn btn-primary" (click)="editIssue()" [disabled]="componentState != 3">Editar</button>
+      <button class="btn btn-primary" (click)="deleteIssue()" [disabled]="componentState != 3">Eliminar</button>
     </div>
   </div>
   <br>
@@ -40,11 +36,13 @@
 <!-- /LISTADO DE ISSUES -->
 <br>
 <!-- /FORMULARIO -->
-
-<div class="container card card-outline-secondary">
+<form>
+<div class="container card card-outline-secondary" *ngIf="componentState != 0">
   <br>
   <blockquote class="blockquote">
-    <h3>Creación de Incidencia</h3>
+    <h3 *ngIf="componentState == 1">Nueva Incidencia</h3>
+    <h3 *ngIf="componentState == 2">Editar Incidencia</h3>
+    <h3 *ngIf="componentState == 3">Creación de Incidencia</h3>
   </blockquote>
   <hr>
 
@@ -52,13 +50,13 @@
     <div class="col-md-6">
       <div class="form-group">
         <label>Código</label>
-        <input type="email" class="form-control" placeholder="Introduzca Código">
+        <input type="text" name="code" [(ngModel)]="issueSelected.code" class="form-control" placeholder="Introduzca Código" >
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
         <label>Descripción</label>
-        <input type="email" class="form-control" placeholder="Introduzca Descripción">
+        <input type="text" name="description" [(ngModel)]="issueSelected.description" class="form-control" placeholder="Introduzca Descripción">
       </div>
     </div>
   </div>
@@ -67,23 +65,13 @@
     <div class="col-md-6">
       <div class="form-group">
         <label>Tipo</label>
-        <select name="" id="" class="form-control">
-          <option value="">01</option>
-          <option value="">02</option>
-          <option value="">03</option>
-          <option value="">04</option>
-        </select>
+        <input type="text" name="type" [(ngModel)]="issueSelected.type" class="form-control" placeholder="Introduzca Código" >
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
         <label>Subtipo</label>
-        <select name="" id="" class="form-control">
-          <option value="">01</option>
-          <option value="">02</option>
-          <option value="">03</option>
-          <option value="">04</option>
-        </select>
+        <input type="text" name="subtype" [(ngModel)]="issueSelected.subtype" class="form-control" placeholder="Introduzca Código" >
       </div>
     </div>
   </div>
@@ -92,10 +80,10 @@
     <div class="col-md-6">
       <div class="form-group">
         <label>Estado</label>
-        <select name="" id="" class="form-control">
-          <option value="">Abierta</option>
-          <option value="">Cerrada</option>
-          <option value="">Cancelada</option>
+        <select name="state" [(ngModel)]="issueSelected.state" class="form-control">
+          <option value="0">Abierta</option>
+          <option value="1">Cerrada</option>
+          <option value="2">Cancelada</option>
         </select>
       </div>
     </div>
@@ -165,13 +153,14 @@
     </div>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col" *ngIf="componentState != 3">
       <button class="btn btn-primary">Guardar</button>
       <button class="btn btn-primary">Limpiar</button>
-      <button class="btn btn-primary">Cancelar</button>
+      <button class="btn btn-primary" (click)="cancelEdition()">Cancelar</button>
     </div>
   </div>
   <br>
 </div>
+</form>
 <!-- /FORMULARIO -->
 <br>

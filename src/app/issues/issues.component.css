@@ -2,7 +2,7 @@ tr.selected {
     background-color: darkgray;
 }
 
-.scrollable {
+.scrollable_y {
     height: 300px;
     overflow-y: scroll;
 }
