@@ -120,6 +120,9 @@ export class IssuesComponent implements OnInit {
    * @param i indice de la Issue sobre la que se ha hecho click
    */
   clickRow(i: number) {
+    if(this.componentState == ComponentState.NewIssue || this.componentState == ComponentState.EditIssue) {
+      return;
+    }
     if (this.indexSelected == i) {
       this.deselectRow(i);
       this.setState(ComponentState.Default, i);
