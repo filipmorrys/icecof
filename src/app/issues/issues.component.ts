@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Issue, IssueState, TrackType, ComponentState } from './issues.model';
-import { initDomAdapter } from '@angular/platform-browser/src/browser';
 import { ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { Renderer2 } from '@angular/core';
@@ -145,11 +144,9 @@ export class IssuesComponent implements OnInit {
     if (state == ComponentState.NewIssue) {
       this.issueSelected = new Issue();
       console.log('Issue: '+this.issueSelected.code);
-      this.indexSelected = -1;
       return;
     }
     this.issueSelected = this.issues[i];
-    console.log('Issue: '+this.issueSelected.code);
     console.log('Componente en modo: ' + this.componentState);
   }
 
@@ -187,7 +184,7 @@ export class IssuesComponent implements OnInit {
 
   editIssue() {
     console.log('editIssue');
-    this.setState(ComponentState.EditIssue);
+    this.setState(ComponentState.EditIssue, this.indexSelected);
   }
 
   deleteIssue() {
@@ -200,7 +197,7 @@ export class IssuesComponent implements OnInit {
    * Cancelar edicion
    */
   cancelEdition(){
-    console.log('cancel Edition');
+    console.log('cancelEdition');
     this.setState(ComponentState.Default);
   } 
 }
