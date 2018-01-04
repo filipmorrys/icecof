@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { IssuesComponent } from './issues/issues.component';
 import { NavComponent } from './nav/nav.component';
+import { TopologyService } from './topology.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -16,9 +18,10 @@ import { NavComponent } from './nav/nav.component';
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+    HttpClientModule
   ],
-  providers: [],
+  providers: [TopologyService, HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

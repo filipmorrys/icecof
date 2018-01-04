@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Issue, IssueState, TrackType, ComponentState } from './issues.model';
+import { Issue, IssueState, TrackType, ComponentState, Node } from './issues.model';
 import { ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { Renderer2 } from '@angular/core';
+import { TopologyService } from '../topology.service';
 
 @Component({
   selector: 'app-issues',
@@ -40,9 +41,14 @@ export class IssuesComponent implements OnInit {
    */
   indexSelected: number;
 
+  /**
+   * Array de nodos de la topología
+   */
+  nodes: Array<Node>;
+
   @ViewChild('tableIssues') tableIssues: ElementRef;
 
-  constructor(private renderer: Renderer2) { }
+  constructor(private topology: TopologyService, private renderer: Renderer2) { }
 
   ngOnInit() {
 
@@ -50,6 +56,13 @@ export class IssuesComponent implements OnInit {
     this.indexSelected = -1;
 
     this.componentState = ComponentState.Default;
+
+    this.nodes = [];
+
+    this.topology.findNodes().then((response:Array<Node>) => {
+      this.nodes = response;
+    });
+
 
     this.issues = [
       {
@@ -59,14 +72,18 @@ export class IssuesComponent implements OnInit {
         subtype: 'Retraso en nodo',
         state: IssueState.Open,
         initialNode: {
+          id: 1,
           mnemonic: 'ND.SID1',
           name: 'Saiding 1',
-          shortName: 'SID1'
+          shortName: 'SID1',
+          sectionKp: 100
         },
         finalNode: {
+          id: 2,
           mnemonic: 'ND.SID2',
           name: 'Saiding 2',
-          shortName: 'SID2'
+          shortName: 'SID2',
+          sectionKp: 200
         },
         initialHour: '12:00:00',
         finalHour: '16:00:00',
@@ -88,14 +105,18 @@ export class IssuesComponent implements OnInit {
         subtype: 'Retraso en nodo',
         state: IssueState.Open,
         initialNode: {
+          id: 1,
           mnemonic: 'ND.MED',
           name: 'Medina',
-          shortName: 'Med'
+          shortName: 'Med',
+          sectionKp: 100
         },
         finalNode: {
+          id: 2,
           mnemonic: 'ND.MEC',
           name: 'Meca',
-          shortName: 'MEC'
+          shortName: 'MEC',
+          sectionKp: 200
         },
         initialHour: '12:00:00',
         finalHour: '16:00:00',

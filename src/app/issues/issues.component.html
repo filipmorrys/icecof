@@ -95,22 +95,18 @@
     <div class="col-md-6">
       <div class="form-group">
         <label>Nodo Inicial</label>
-        <select name="" id="" class="form-control">
-          <option value="">01</option>
-          <option value="">02</option>
-          <option value="">03</option>
-          <option value="">04</option>
+        <select name="initialNode" class="form-control">
+          <option value=""></option>
+          <option *ngFor="let n of nodes" value="n.id">{{n.name}}</option>
         </select>
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
         <label>Nodo final</label>
-        <select name="" id="" class="form-control">
-          <option value="">01</option>
-          <option value="">02</option>
-          <option value="">03</option>
-          <option value="">04</option>
+        <select name="finalNode" id="" class="form-control">
+          <option value=""></option>
+          <option *ngFor="let n of nodes" value="n.id">{{n.name}}</option>
         </select>
       </div>
     </div>

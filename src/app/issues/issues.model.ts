@@ -45,6 +45,9 @@ export class Issue {
  * Representa un nodo
  */
 export class Node {
+    /** Identificador del nodo */
+    id: number;
+
     /** Mnemonico del nodo */
     mnemonic: string;
 
@@ -53,6 +56,9 @@ export class Node {
 
     /** Nombre corto del nodo */
     shortName: string;
+
+    /** Punto kilometrico del nodo */
+    sectionKp: number;
 }
 
 /**
@@ -82,8 +88,8 @@ export enum IssueState {
 }
 
 export enum TrackType {
-    Station, 
-    Circulation
+    Station = 0, 
+    Circulation = 1
 }
 
 export enum ComponentState {
