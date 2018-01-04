@@ -66,16 +66,41 @@ export class Node {
  */
 export class Track {
 
+    id: number;
+
     mnemonic: string;
 
     name: string;
 
-    trackType: TrackType;
+    trackType: string;
 
     initialNode: string;
 
     finalNode: string;
 
+    initialNodeShortName: string;
+
+    finalNodeShortName: string;
+
+    constructor(
+        id: number,
+        mnemonic: string,
+        name: string,
+        trackType: string,
+        initialNode: string,
+        finalNode: string,
+        initialNodeShortName: string = '',
+        finalNodeShortName: string = ''
+    ) {
+        this.id = id;
+        this.mnemonic = mnemonic;
+        this.name = name;
+        this.trackType = trackType;
+        this.initialNode = initialNode;
+        this.finalNode = finalNode;
+        this.initialNodeShortName = initialNodeShortName;
+        this.finalNodeShortName = finalNodeShortName;
+    }
 }
 
 /**

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Issue, IssueState, TrackType, ComponentState, Node } from './issues.model';
+import { Issue, IssueState, TrackType, ComponentState, Node, Track } from './issues.model';
 import { ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { Renderer2 } from '@angular/core';
@@ -46,23 +46,42 @@ export class IssuesComponent implements OnInit {
    */
   nodes: Array<Node>;
 
-  @ViewChild('tableIssues') tableIssues: ElementRef;
+  /**
+   * Array de tracks entre los nodos seleccionados. 
+   * Cambia en funcion de los nodos seleccinados
+   */
+  tracks: Array<Track>;
+
+  /**
+   * Nodo inicial seleccionado
+   */
+  initialNode: number;
+
+  /**
+   * Nodo final seleccionado
+   */
+  finalNode: number;
+
+  @ViewChild('formIssue') formIssue: ElementRef;
 
   constructor(private topology: TopologyService, private renderer: Renderer2) { }
 
   ngOnInit() {
 
-    console.log('Table: ' + this.tableIssues);
+    console.log(this.formIssue);
     this.indexSelected = -1;
 
     this.componentState = ComponentState.Default;
 
     this.nodes = [];
+    this.tracks = [];
 
     this.topology.findNodes().then((response:Array<Node>) => {
       this.nodes = response;
     });
 
+    this.initialNode = -1;
+    this.finalNode = -1;
 
     this.issues = [
       {
@@ -90,9 +109,10 @@ export class IssuesComponent implements OnInit {
         expectedFinalHour: '16:00:00',
         tracks: [
           {
+            id: 1,
             mnemonic: 'TRK.SID1.1',
             name: '1ST',
-            trackType: TrackType.Station,
+            trackType: 'STATIONING',
             initialNode: 'ND.SID1',
             finalNode: null
           }
@@ -123,9 +143,10 @@ export class IssuesComponent implements OnInit {
         expectedFinalHour: '16:00:00',
         tracks: [
           {
+            id: 1,
             mnemonic: 'TRK.MED.1',
             name: '1ST',
-            trackType: TrackType.Station,
+            trackType: 'STATIONING',
             initialNode: 'ND.',
             finalNode: null
           }
@@ -221,5 +242,48 @@ export class IssuesComponent implements OnInit {
     console.log('cancelEdition');
     this.setState(ComponentState.Default);
   } 
+
+  /**
+   * Operacion invocada cuando se cambia el nodo inicial o final del formulario.
+   * Recalcula las vías existentes entre nodo inicial y final
+   */
+  changeTracks() {
+    console.log('changeTracks');
+    if (this.initialNode == -1 || this.finalNode == -1) {
+      console.log('Se deben seleccionar ambos nodos');
+      return;
+    }
+
+    this.topology.findTracks(this.initialNode, this.finalNode)
+    .then(
+      (response: Array<Track>) => {
+        this.tracks = response;
+        this.tracks.forEach(
+          (t) => {
+            // Los nombres cortos de las vías no nos llegan del servidor
+            // tenemos que calcularlos
+            t.initialNodeShortName = this.getNodeShortName(t.initialNode);
+            t.finalNodeShortName = this.getNodeShortName(t.finalNode);
+          }
+        );
+
+      }
+    );
+
+  }
+
+  /**
+   * Devuelve el nombre corto de un nodo a partir de su mnemonico
+   * @param nodeMnemo 
+   */
+  getNodeShortName(nodeMnemo: string): string {
+    for (let n of this.nodes) {
+      if(n.mnemonic == nodeMnemo) {
+        return n.shortName;
+      }
+    }
+    return '';
+  }
+
 }
 

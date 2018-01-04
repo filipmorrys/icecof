@@ -36,7 +36,7 @@
 <!-- /LISTADO DE ISSUES -->
 <br>
 <!-- /FORMULARIO -->
-<form>
+<form #formIssue="ngForm">
 <div class="container card card-outline-secondary" *ngIf="componentState != 0">
   <br>
   <blockquote class="blockquote">
@@ -50,13 +50,13 @@
     <div class="col-md-6">
       <div class="form-group">
         <label>Código</label>
-        <input type="text" name="code" [(ngModel)]="issueSelected.code" class="form-control" placeholder="Introduzca Código" >
+        <input type="text" name="code" id="code" [(ngModel)]="issueSelected.code" class="form-control" placeholder="Introduzca Código" >
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
         <label>Descripción</label>
-        <input type="text" name="description" [(ngModel)]="issueSelected.description" class="form-control" placeholder="Introduzca Descripción">
+        <input type="text" name="description" id="description" [(ngModel)]="issueSelected.description" class="form-control" placeholder="Introduzca Descripción">
       </div>
     </div>
   </div>
@@ -95,18 +95,18 @@
     <div class="col-md-6">
       <div class="form-group">
         <label>Nodo Inicial</label>
-        <select name="initialNode" class="form-control">
-          <option value=""></option>
-          <option *ngFor="let n of nodes" value="n.id">{{n.name}}</option>
+        <select name="initialNode" class="form-control" [(ngModel)]="initialNode" (change)="changeTracks()">
+          <option value="-1"></option>
+          <option *ngFor="let n of nodes" value="{{n.id}}">{{n.name}}</option>
         </select>
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
         <label>Nodo final</label>
-        <select name="finalNode" id="" class="form-control">
-          <option value=""></option>
-          <option *ngFor="let n of nodes" value="n.id">{{n.name}}</option>
+        <select name="finalNode" id="" class="form-control" [(ngModel)]="finalNode" (change)="changeTracks()">
+          <option value="-1"></option>
+          <option *ngFor="let n of nodes" value="{{n.id}}">{{n.name}}</option>
         </select>
       </div>
     </div>
@@ -138,12 +138,11 @@
       <div class="form-group">
         <label>Vías seleccionadas</label>
         <select multiple name="" id="" class="form-control">
-          <option value="">Via 1 (Saiding 1)</option>
-          <option value="">Via 2 (Saiding 1)</option>
-          <option value="">Via 1 (Saiding 1-Sading 2)</option>
-          <option value="">Via 2 (Saiding 1-Sading 2)</option>
-          <option value="">Via 1 (Saiding 2)</option>
-          <option value="">Via 2 (Saiding 2)</option>
+          <option value="" *ngFor="let t of tracks">
+            Via {{t.name}} ({{t.initialNodeShortName}}
+            <span *ngIf="t.initialNodeShortName != t.finalNodeShortName">-{{t.finalNodeShortName}}</span>
+            )
+          </option>
         </select>
       </div>
     </div>
