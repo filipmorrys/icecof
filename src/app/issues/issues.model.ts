@@ -95,7 +95,7 @@ export enum IssueState {
 }
 
 export enum TrackType {
-    Station = 0, 
+    Station = 0,
     Circulation = 1
 }
 

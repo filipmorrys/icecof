@@ -7,14 +7,14 @@ const END_POINT = 'http://localhost:8080';
 @Injectable()
 export class TopologyService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   /**
    * Pide al servidor la lista de nodos y devuelve un Array<Node>
    */
   findNodes() {
     const resNodes: Array<Node> = [];
-    return this.http.get('http://localhost:8080/nodes').toPromise()
+    return this.http.get(END_POINT + '/nodes').toPromise()
     .then(
       (response: any) => {
         /*
@@ -37,17 +37,17 @@ export class TopologyService {
   }
 
   /**
-   * Devuelve las vías de estación y de circulación entre el nodo 
+   * Devuelve las vías de estación y de circulación entre el nodo
    * inicial y final. Pide dichas vías al servidor. Devuelve Array<Track>
-   * 
+   *
    * @param initialNode identificador del nodo inicial
    * @param finalNode identificador del nodo final
    */
   findTracks(initialNode: number, finalNode: number) {
     const resTracks: Array<Track> = [];
-    return this.http.get(END_POINT+'/tracks/'+initialNode+'/'+finalNode).toPromise()
+    return this.http.get(END_POINT + '/tracks/' + initialNode + '/' + finalNode).toPromise()
     .then(
-      (response:any) => {
+      (response: any) => {
         console.log('Peticion de vías: OK');
         response.forEach(
           (elem) => {
@@ -61,6 +61,5 @@ export class TopologyService {
         console.log(error);
       }
     );
-    
   }
 }
