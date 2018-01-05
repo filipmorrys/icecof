@@ -167,6 +167,11 @@ export class IssuesComponent implements OnInit {
   }
 
 
+  /**
+   * Establece el estado del componente
+   * @param state estado del componente 
+   * @param i indice de la issue seleccionada, cuando aplique
+   */
   setState(state: ComponentState, i: number = -1) {
     this.componentState = state;
     if (state == ComponentState.Default) {
@@ -211,16 +216,25 @@ export class IssuesComponent implements OnInit {
     this.indexSelected = -1;
   }
 
+  /**
+   * Accion invocada cuando el usuario pulsa crear issue
+   */
   createIssue() {
     console.log('createIssue');
     this.setState(ComponentState.NewIssue);
   }
 
+  /**
+   * Accion invocada cuando el usuario pulsa editar issue
+   */
   editIssue() {
     console.log('editIssue');
     this.setState(ComponentState.EditIssue, this.indexSelected);
   }
 
+  /**
+   * Accion invocada cuando el usuario pulsa borrar issue
+   */
   deleteIssue() {
     console.log('deleteIssue');
     this.issues.splice(this.indexSelected, 1);
@@ -258,10 +272,8 @@ export class IssuesComponent implements OnInit {
             t.finalNodeShortName = this.getNodeShortName(t.finalNode);
           }
         );
-
-      }
+s      }
     );
-
   }
 
   /**
@@ -277,31 +289,10 @@ export class IssuesComponent implements OnInit {
     return '';
   }
 
+  /**
+   * Salvar la issue
+   */
   saveIssue() {
-    /*
-    // Completamos las vías
-    this.issueSelected.tracks = [];
-    this.selectedTrackIds.forEach(
-      (trackId) => {
-        for (let t of this.tracks) {
-          if(t.id === trackId) {
-            this.issueSelected.tracks.push(t);
-          }
-        }
-      }
-    );
-
-    // Completamos los nodos
-    for (let n of this.nodes) {
-      if (n.id = this.initialNode) {
-        this.issueSelected.initialNode = n;
-      }
-
-      if (n.id = this.finalNode) {
-        this.issueSelected.finalNode = n;
-      }
-    }
-    */
     // Salvar la issue:
     if(this.componentState === ComponentState.NewIssue) {
       this.issues.push(this.issueSelected);
