@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Node, Track } from './issues/issues.model';
 
-const END_POINT:string = 'http://localhost:8080';
+const END_POINT = 'http://localhost:8080';
 
 @Injectable()
 export class TopologyService {

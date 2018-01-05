@@ -52,21 +52,6 @@ export class IssuesComponent implements OnInit {
    */
   tracks: Array<Track>;
 
-  /**
-   * Nodo inicial seleccionado
-   */
-  initialNode: number;
-
-  /**
-   * Nodo final seleccionado
-   */
-  finalNode: number;
-
-  /**
-   * Array de identificadores de tracks seleccionados 
-   */
-  selectedTrackIds: Array<number>;
-
   @ViewChild('formIssue') formIssue: ElementRef;
 
   constructor(private topology: TopologyService, private renderer: Renderer2) { }
@@ -81,14 +66,9 @@ export class IssuesComponent implements OnInit {
     this.nodes = [];
     this.tracks = [];
 
-    this.selectedTrackIds = [];
-
     this.topology.findNodes().then((response:Array<Node>) => {
       this.nodes = response;
     });
-
-    this.initialNode = -1;
-    this.finalNode = -1;
 
     this.issues = [
       {
@@ -167,6 +147,7 @@ export class IssuesComponent implements OnInit {
     ];
   }
 
+
   /**
    * Operación invocada desde la vista cuando se hace click sobre una Issue en la tabla
    * @param i indice de la Issue sobre la que se ha hecho click
@@ -199,7 +180,7 @@ export class IssuesComponent implements OnInit {
       console.log('Issue: '+this.issueSelected.code);
       return;
     }
-    this.issueSelected = this.issues[i];
+    this.issueSelected = Object.create(this.issues[i]);
     console.log('Componente en modo: ' + this.componentState);
   }
 
@@ -260,12 +241,12 @@ export class IssuesComponent implements OnInit {
    */
   changeTracks() {
     console.log('changeTracks');
-    if (this.initialNode == -1 || this.finalNode == -1) {
+    if (this.issueSelected.initialNode === undefined || this.issueSelected.finalNode === undefined) {
       console.log('Se deben seleccionar ambos nodos');
       return;
     }
 
-    this.topology.findTracks(this.initialNode, this.finalNode)
+    this.topology.findTracks(this.issueSelected.initialNode.id, this.issueSelected.finalNode.id)
     .then(
       (response: Array<Track>) => {
         this.tracks = response;
@@ -297,6 +278,7 @@ export class IssuesComponent implements OnInit {
   }
 
   saveIssue() {
+    /*
     // Completamos las vías
     this.issueSelected.tracks = [];
     this.selectedTrackIds.forEach(
@@ -319,9 +301,15 @@ export class IssuesComponent implements OnInit {
         this.issueSelected.finalNode = n;
       }
     }
-
+    */
     // Salvar la issue:
-    this.issues.push(this.issueSelected);
+    if(this.componentState === ComponentState.NewIssue) {
+      this.issues.push(this.issueSelected);
+    } else if(this.componentState === ComponentState.EditIssue) {
+      this.issues[this.indexSelected] = this.issueSelected;
+    } else {
+      throw new Error('Estado del componente incorrecto: '+this.componentState);
+    }
     this.setState(ComponentState.Default);
   }
 }

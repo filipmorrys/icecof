@@ -93,9 +93,9 @@
         <div class="form-group">
           <label>Estado</label>
           <select name="state" [(ngModel)]="issueSelected.state" class="form-control" #stateState="ngModel" required>
-            <option value="0">Abierta</option>
-            <option value="1">Cerrada</option>
-            <option value="2">Cancelada</option>
+            <option [ngValue]="0">Abierta</option>
+            <option [ngValue]="1">Cerrada</option>
+            <option [ngValue]="2">Cancelada</option>
           </select>
           <div *ngIf="!stateState.valid && stateState.touched" class="alert alert-danger">
             <span [hidden]="!stateState.errors?.required">Campo requerido</span>
@@ -110,8 +110,8 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Nodo Inicial</label>
-          <select name="initialNode" class="form-control" [(ngModel)]="initialNode" (change)="changeTracks()" required #initialNodeState="ngModel">
-            <option *ngFor="let n of nodes" value="{{n.id}}">{{n.name}}</option>
+          <select name="initialNode" class="form-control" [(ngModel)]="issueSelected.initialNode" (change)="changeTracks()" required #initialNodeState="ngModel">
+            <option *ngFor="let n of nodes" [ngValue]="n">{{n.name}}</option>
           </select>
           <div *ngIf="!initialNodeState.valid && initialNodeState.touched" class="alert alert-danger">
             <span [hidden]="!initialNodeState.errors?.required">Campo requerido</span>
@@ -121,8 +121,8 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Nodo final</label>
-          <select name="finalNode" id="" class="form-control" [(ngModel)]="finalNode" (change)="changeTracks()" #finalNodeState="ngModel">
-            <option *ngFor="let n of nodes" value="{{n.id}}">{{n.name}}</option>
+          <select name="finalNode" id="" class="form-control" [(ngModel)]="issueSelected.finalNode" (change)="changeTracks()" #finalNodeState="ngModel">
+            <option *ngFor="let n of nodes" [ngValue]="n">{{n.name}}</option>
           </select>
           <div *ngIf="!finalNodeState.valid && finalNodeState.touched" class="alert alert-danger">
             <span [hidden]="!finalNodeState.errors?.required">Campo requerido</span>
@@ -156,8 +156,9 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Vías seleccionadas</label>
-          <select multiple name="selectedTrack" id="selectedTrack" class="form-control" [(ngModel)]="selectedTrackIds">
-            <option [value]="t.id" *ngFor="let t of tracks">
+          <select multiple name="selectedTrack" id="selectedTrack" class="form-control" 
+            [(ngModel)]="issueSelected.tracks">
+            <option [ngValue]="t" *ngFor="let t of tracks">
               Via {{t.name}} ({{t.initialNodeShortName}}
               <span *ngIf="t.initialNodeShortName != t.finalNodeShortName">-{{t.finalNodeShortName}}</span>
               )
