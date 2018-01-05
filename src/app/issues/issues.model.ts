@@ -30,6 +30,7 @@ export class Issue {
     /** Hora final */
     finalHour: string;
 
+    /** Hora final esperada */
     expectedFinalHour: string;
 
     /** Lista de tracks afectadas */
@@ -82,25 +83,6 @@ export class Track {
 
     finalNodeShortName: string;
 
-    constructor(
-        id: number,
-        mnemonic: string,
-        name: string,
-        trackType: string,
-        initialNode: string,
-        finalNode: string,
-        initialNodeShortName: string = '',
-        finalNodeShortName: string = ''
-    ) {
-        this.id = id;
-        this.mnemonic = mnemonic;
-        this.name = name;
-        this.trackType = trackType;
-        this.initialNode = initialNode;
-        this.finalNode = finalNode;
-        this.initialNodeShortName = initialNodeShortName;
-        this.finalNodeShortName = finalNodeShortName;
-    }
 }
 
 /**

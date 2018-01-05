@@ -62,6 +62,11 @@ export class IssuesComponent implements OnInit {
    */
   finalNode: number;
 
+  /**
+   * Array de identificadores de tracks seleccionados 
+   */
+  selectedTrackIds: Array<number>;
+
   @ViewChild('formIssue') formIssue: ElementRef;
 
   constructor(private topology: TopologyService, private renderer: Renderer2) { }
@@ -75,6 +80,8 @@ export class IssuesComponent implements OnInit {
 
     this.nodes = [];
     this.tracks = [];
+
+    this.selectedTrackIds = [];
 
     this.topology.findNodes().then((response:Array<Node>) => {
       this.nodes = response;
@@ -114,7 +121,9 @@ export class IssuesComponent implements OnInit {
             name: '1ST',
             trackType: 'STATIONING',
             initialNode: 'ND.SID1',
-            finalNode: null
+            finalNode: null,
+            initialNodeShortName: '',
+            finalNodeShortName: ''
           }
         ]
       },
@@ -148,7 +157,9 @@ export class IssuesComponent implements OnInit {
             name: '1ST',
             trackType: 'STATIONING',
             initialNode: 'ND.',
-            finalNode: null
+            finalNode: null,
+            initialNodeShortName: '',
+            finalNodeShortName: ''
           }
         ]
       }
@@ -285,5 +296,33 @@ export class IssuesComponent implements OnInit {
     return '';
   }
 
+  saveIssue() {
+    // Completamos las vías
+    this.issueSelected.tracks = [];
+    this.selectedTrackIds.forEach(
+      (trackId) => {
+        for (let t of this.tracks) {
+          if(t.id === trackId) {
+            this.issueSelected.tracks.push(t);
+          }
+        }
+      }
+    );
+
+    // Completamos los nodos
+    for (let n of this.nodes) {
+      if (n.id = this.initialNode) {
+        this.issueSelected.initialNode = n;
+      }
+
+      if (n.id = this.finalNode) {
+        this.issueSelected.finalNode = n;
+      }
+    }
+
+    // Salvar la issue:
+    this.issues.push(this.issueSelected);
+    this.setState(ComponentState.Default);
+  }
 }
 

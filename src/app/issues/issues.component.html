@@ -37,130 +37,144 @@
 <br>
 <!-- /FORMULARIO -->
 <form #formIssue="ngForm">
-<div class="container card card-outline-secondary" *ngIf="componentState != 0">
-  <br>
-  <blockquote class="blockquote">
-    <h3 *ngIf="componentState == 1">Nueva Incidencia</h3>
-    <h3 *ngIf="componentState == 2">Editar Incidencia</h3>
-    <h3 *ngIf="componentState == 3">Creación de Incidencia</h3>
-  </blockquote>
-  <hr>
+  <div class="container card card-outline-secondary" *ngIf="componentState != 0">
+    <br>
+    <blockquote class="blockquote">
+      <h3 *ngIf="componentState == 1">Nueva Incidencia</h3>
+      <h3 *ngIf="componentState == 2">Editar Incidencia</h3>
+      <h3 *ngIf="componentState == 3">Creación de Incidencia</h3>
+    </blockquote>
+    <hr>
 
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Código</label>
-        <input type="text" name="code" id="code" [(ngModel)]="issueSelected.code" class="form-control" placeholder="Introduzca Código" >
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Código</label>
+          <input type="text" name="code" id="code" [(ngModel)]="issueSelected.code" class="form-control" placeholder="Introduzca Código"
+            required #codeState="ngModel">
+          <div *ngIf="!codeState.valid && codeState.touched" class="alert alert-danger">
+            <span [hidden]="!codeState.errors?.required">Campo requerido</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Descripción</label>
+          <input type="text" name="description" id="description" [(ngModel)]="issueSelected.description" class="form-control" placeholder="Introduzca Descripción">
+        </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Descripción</label>
-        <input type="text" name="description" id="description" [(ngModel)]="issueSelected.description" class="form-control" placeholder="Introduzca Descripción">
-      </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Tipo</label>
-        <input type="text" name="type" [(ngModel)]="issueSelected.type" class="form-control" placeholder="Introduzca Código" >
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Tipo</label>
+          <input type="text" name="type" [(ngModel)]="issueSelected.type" class="form-control" placeholder="Introduzca Código" required
+            #typeState="ngModel">
+          <div *ngIf="!typeState.valid && typeState.touched" class="alert alert-danger">
+            <span [hidden]="!typeState.errors?.required">Campo requerido</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Subtipo</label>
+          <input type="text" name="subtype" [(ngModel)]="issueSelected.subtype" class="form-control" placeholder="Introduzca Código"
+            required #subtypeState="ngModel">
+          <div *ngIf="!subtypeState.valid && subtypeState.touched" class="alert alert-danger">
+            <span [hidden]="!subtypeState.errors?.required">Campo requerido</span>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Subtipo</label>
-        <input type="text" name="subtype" [(ngModel)]="issueSelected.subtype" class="form-control" placeholder="Introduzca Código" >
-      </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Estado</label>
-        <select name="state" [(ngModel)]="issueSelected.state" class="form-control">
-          <option value="0">Abierta</option>
-          <option value="1">Cerrada</option>
-          <option value="2">Cancelada</option>
-        </select>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Estado</label>
+          <select name="state" [(ngModel)]="issueSelected.state" class="form-control" #stateState="ngModel" required>
+            <option value="0">Abierta</option>
+            <option value="1">Cerrada</option>
+            <option value="2">Cancelada</option>
+          </select>
+          <div *ngIf="!stateState.valid && stateState.touched" class="alert alert-danger">
+            <span [hidden]="!stateState.errors?.required">Campo requerido</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
       </div>
     </div>
-    <div class="col-md-6">
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Nodo Inicial</label>
-        <select name="initialNode" class="form-control" [(ngModel)]="initialNode" (change)="changeTracks()">
-          <option value="-1"></option>
-          <option *ngFor="let n of nodes" value="{{n.id}}">{{n.name}}</option>
-        </select>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Nodo Inicial</label>
+          <select name="initialNode" class="form-control" [(ngModel)]="initialNode" (change)="changeTracks()" required #initialNodeState="ngModel">
+            <option *ngFor="let n of nodes" value="{{n.id}}">{{n.name}}</option>
+          </select>
+          <div *ngIf="!initialNodeState.valid && initialNodeState.touched" class="alert alert-danger">
+            <span [hidden]="!initialNodeState.errors?.required">Campo requerido</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Nodo final</label>
+          <select name="finalNode" id="" class="form-control" [(ngModel)]="finalNode" (change)="changeTracks()" #finalNodeState="ngModel">
+            <option *ngFor="let n of nodes" value="{{n.id}}">{{n.name}}</option>
+          </select>
+          <div *ngIf="!finalNodeState.valid && finalNodeState.touched" class="alert alert-danger">
+            <span [hidden]="!finalNodeState.errors?.required">Campo requerido</span>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Nodo final</label>
-        <select name="finalNode" id="" class="form-control" [(ngModel)]="finalNode" (change)="changeTracks()">
-          <option value="-1"></option>
-          <option *ngFor="let n of nodes" value="{{n.id}}">{{n.name}}</option>
-        </select>
-      </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Hora inicial</label>
-        <input type="text" class="form-control" name="" id="">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Hora inicial</label>
+          <input type="datetime-local" class="form-control" name="initialHour" [(ngModel)]="issueSelected.initialHour">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Hora final</label>
+          <input type="datetime-local" class="form-control" name="finallHour" [(ngModel)]="issueSelected.finalHour">
+        </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Hora final</label>
-        <input type="text" class="form-control" name="" id="">
-      </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Hora final esperada</label>
-        <input type="text" class="form-control" name="" id="">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Hora final esperada</label>
+          <input type="datetime-local" class="form-control" name="expectedFinalHour" [(ngModel)]="issueSelected.expectedFinalHour">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Vías seleccionadas</label>
+          <select multiple name="selectedTrack" id="selectedTrack" class="form-control" [(ngModel)]="selectedTrackIds">
+            <option [value]="t.id" *ngFor="let t of tracks">
+              Via {{t.name}} ({{t.initialNodeShortName}}
+              <span *ngIf="t.initialNodeShortName != t.finalNodeShortName">-{{t.finalNodeShortName}}</span>
+              )
+            </option>
+          </select>
+        </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Vías seleccionadas</label>
-        <select multiple name="" id="" class="form-control">
-          <option value="" *ngFor="let t of tracks">
-            Via {{t.name}} ({{t.initialNodeShortName}}
-            <span *ngIf="t.initialNodeShortName != t.finalNodeShortName">-{{t.finalNodeShortName}}</span>
-            )
-          </option>
-        </select>
+    <div class="row">
+      <div class="col" *ngIf="componentState == 2 || componentState == 1">
+        <button class="btn btn-primary" (click)="saveIssue()" [disabled]="formIssue.invalid">Guardar</button>
+        <button class="btn btn-primary">Limpiar</button>
+        <button class="btn btn-primary" (click)="cancelEdition()">Cancelar</button>
       </div>
     </div>
+    <br>
   </div>
-  <div class="row">
-    <div class="col" *ngIf="componentState == 2">
-      <button class="btn btn-primary">Guardar</button>
-      <button class="btn btn-primary">Limpiar</button>
-      <button class="btn btn-primary" (click)="cancelEdition()">Cancelar</button>
-    </div>
-    <div class="col" *ngIf="componentState == 1">
-      <button class="btn btn-primary">Guardar</button>
-      <button class="btn btn-primary">Limpiar</button>
-      <button class="btn btn-primary" (click)="cancelEdition()">Cancelar</button>
-    </div>
-  </div>
-  <br>
-</div>
 </form>
 <!-- /FORMULARIO -->
 <br>
