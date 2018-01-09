@@ -14,14 +14,6 @@ import { IssuesService } from '../issues.service';
 export class IssuesComponent implements OnInit {
 
   /**
-<<<<<<< HEAD
-=======
-   * Lista de issues
-   */
-  issues: Array<Issue>;
-
-  /**
->>>>>>> bbb2c15cd8663f01dec3d82df78ad7eadebb764e
    * Estado en el que se encuentra el commponente, que puede ser:
    *  - Modo Creación
    *  - Modo Edición
@@ -204,11 +196,7 @@ export class IssuesComponent implements OnInit {
           }
         );
       }
-<<<<<<< HEAD
     );
-=======
-      );
->>>>>>> bbb2c15cd8663f01dec3d82df78ad7eadebb764e
   }
 
   /**
@@ -229,19 +217,10 @@ export class IssuesComponent implements OnInit {
    */
   saveIssue() {
     // Salvar la issue:
-<<<<<<< HEAD
     if(this.componentState === ComponentState.NewIssue) {
       this.issuesService.save(this.issueSelected);
     } else if(this.componentState === ComponentState.EditIssue) {
       this.issuesService.issues[this.indexSelected] = this.issueSelected;
-=======
-    if (this.componentState === ComponentState.NewIssue) {
-      this.issues.push(this.issueSelected);
-
-    } else if (this.componentState === ComponentState.EditIssue) {
-      this.issues[this.indexSelected] = this.issueSelected;
-
->>>>>>> bbb2c15cd8663f01dec3d82df78ad7eadebb764e
     } else {
       throw new Error('Estado del componente incorrecto: ' + this.componentState);
     }
