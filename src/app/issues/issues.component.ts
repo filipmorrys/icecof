@@ -14,6 +14,14 @@ import { IssuesService } from '../issues.service';
 export class IssuesComponent implements OnInit {
 
   /**
+<<<<<<< HEAD
+=======
+   * Lista de issues
+   */
+  issues: Array<Issue>;
+
+  /**
+>>>>>>> bbb2c15cd8663f01dec3d82df78ad7eadebb764e
    * Estado en el que se encuentra el commponente, que puede ser:
    *  - Modo Creación
    *  - Modo Edición
@@ -23,7 +31,7 @@ export class IssuesComponent implements OnInit {
   componentState: ComponentState;
 
   /**
-   * Issue seleccionada de la lista de la tabla. 
+   * Issue seleccionada de la lista de la tabla.
    *  - En Modo creación esta variable será una instancia vacía
    *  - En Modo edición esta variable será la issue que estamos editando
    *  - En Modo consulta esta variable será la issue que estamos consultando
@@ -32,7 +40,7 @@ export class IssuesComponent implements OnInit {
   issueSelected: Issue;
 
   /**
-   * Indice numérico de la Issue que seleccionada. Cuando no haya ninguna issue 
+   * Indice numérico de la Issue que seleccionada. Cuando no haya ninguna issue
    * seleccionada esta variable será -1
    */
   indexSelected: number;
@@ -43,7 +51,7 @@ export class IssuesComponent implements OnInit {
   nodes: Array<Node>;
 
   /**
-   * Array de tracks entre los nodos seleccionados. 
+   * Array de tracks entre los nodos seleccionados.
    * Cambia en funcion de los nodos seleccinados
    */
   tracks: Array<Track>;
@@ -64,7 +72,7 @@ export class IssuesComponent implements OnInit {
     this.nodes = [];
     this.tracks = [];
 
-    this.topology.findNodes().then((response:Array<Node>) => {
+    this.topology.findNodes().then((response: Array<Node>) => {
       this.nodes = response;
     });
 
@@ -76,14 +84,14 @@ export class IssuesComponent implements OnInit {
    * @param i indice de la Issue sobre la que se ha hecho click
    */
   clickRow(i: number) {
-    if(this.componentState == ComponentState.NewIssue || this.componentState == ComponentState.EditIssue) {
+    if (this.componentState === ComponentState.NewIssue || this.componentState === ComponentState.EditIssue) {
       return;
     }
-    if (this.indexSelected == i) {
+    if (this.indexSelected === i) {
       this.deselectRow(i);
       this.setState(ComponentState.Default, i);
     } else {
-      this.deselectRow(this.indexSelected)
+      this.deselectRow(this.indexSelected);
       this.selectRow(i);
       this.setState(ComponentState.ConsultIssue, i);
     }
@@ -92,20 +100,20 @@ export class IssuesComponent implements OnInit {
 
   /**
    * Establece el estado del componente
-   * @param state estado del componente 
+   * @param state estado del componente
    * @param i indice de la issue seleccionada, cuando aplique
    */
   setState(state: ComponentState, i: number = -1) {
     this.componentState = state;
-    if (state == ComponentState.Default) {
+    if (state === ComponentState.Default) {
       this.issueSelected = null;
       this.deselectRow(this.indexSelected);
       this.indexSelected = -1;
       return;
     }
-    if (state == ComponentState.NewIssue) {
+    if (state === ComponentState.NewIssue) {
       this.issueSelected = new Issue();
-      console.log('Issue: '+this.issueSelected.code);
+      console.log('Issue: ' + this.issueSelected.code);
       return;
     }
     this.issueSelected = Object.create(this.issuesService.issues[i]);
@@ -118,7 +126,7 @@ export class IssuesComponent implements OnInit {
    * @param i indice de la fila
    */
   selectRow(i: number) {
-    if (i == -1) {
+    if (i === -1) {
       return;
     }
     let tr = document.getElementById('row_' + i);
@@ -131,7 +139,7 @@ export class IssuesComponent implements OnInit {
    * @param i indice de la fila
    */
   deselectRow(i: number) {
-    if (i == -1) {
+    if (i === -1) {
       return;
     }
     let tr = document.getElementById('row_' + i);
@@ -167,10 +175,10 @@ export class IssuesComponent implements OnInit {
   /**
    * Cancelar edicion
    */
-  cancelEdition(){
+  cancelEdition() {
     console.log('cancelEdition');
     this.setState(ComponentState.Default);
-  } 
+  }
 
   /**
    * Operacion invocada cuando se cambia el nodo inicial o final del formulario.
@@ -184,7 +192,7 @@ export class IssuesComponent implements OnInit {
     }
 
     this.topology.findTracks(this.issueSelected.initialNode.id, this.issueSelected.finalNode.id)
-    .then(
+      .then(
       (response: Array<Track>) => {
         this.tracks = response;
         this.tracks.forEach(
@@ -196,16 +204,20 @@ export class IssuesComponent implements OnInit {
           }
         );
       }
+<<<<<<< HEAD
     );
+=======
+      );
+>>>>>>> bbb2c15cd8663f01dec3d82df78ad7eadebb764e
   }
 
   /**
    * Devuelve el nombre corto de un nodo a partir de su mnemonico
-   * @param nodeMnemo 
+   * @param nodeMnemo
    */
   getNodeShortName(nodeMnemo: string): string {
-    for (let n of this.nodes) {
-      if(n.mnemonic == nodeMnemo) {
+    for (const n of this.nodes) {
+      if (n.mnemonic === nodeMnemo) {
         return n.shortName;
       }
     }
@@ -217,12 +229,21 @@ export class IssuesComponent implements OnInit {
    */
   saveIssue() {
     // Salvar la issue:
+<<<<<<< HEAD
     if(this.componentState === ComponentState.NewIssue) {
       this.issuesService.save(this.issueSelected);
     } else if(this.componentState === ComponentState.EditIssue) {
       this.issuesService.issues[this.indexSelected] = this.issueSelected;
+=======
+    if (this.componentState === ComponentState.NewIssue) {
+      this.issues.push(this.issueSelected);
+
+    } else if (this.componentState === ComponentState.EditIssue) {
+      this.issues[this.indexSelected] = this.issueSelected;
+
+>>>>>>> bbb2c15cd8663f01dec3d82df78ad7eadebb764e
     } else {
-      throw new Error('Estado del componente incorrecto: '+this.componentState);
+      throw new Error('Estado del componente incorrecto: ' + this.componentState);
     }
     this.setState(ComponentState.Default);
   }
