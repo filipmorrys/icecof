@@ -2,7 +2,7 @@
  * Modelo de incidencia
  */
 export class Issue {
-
+    
     /** Codigo de incidencia */
     code: string;
 

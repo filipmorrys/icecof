@@ -4,6 +4,7 @@ import { ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 import { TopologyService } from '../topology.service';
+import { IssuesService } from '../issues.service';
 
 @Component({
   selector: 'app-issues',
@@ -11,11 +12,6 @@ import { TopologyService } from '../topology.service';
   styleUrls: ['./issues.component.css']
 })
 export class IssuesComponent implements OnInit {
-
-  /**
-   * Lista de issues 
-   */
-  issues: Array<Issue>;
 
   /**
    * Estado en el que se encuentra el commponente, que puede ser:
@@ -54,7 +50,9 @@ export class IssuesComponent implements OnInit {
 
   @ViewChild('formIssue') formIssue: ElementRef;
 
-  constructor(private topology: TopologyService, private renderer: Renderer2) { }
+  constructor(private topology: TopologyService, 
+              private issuesService: IssuesService, 
+              private renderer: Renderer2) { }
 
   ngOnInit() {
 
@@ -70,81 +68,6 @@ export class IssuesComponent implements OnInit {
       this.nodes = response;
     });
 
-    this.issues = [
-      {
-        code: 'Issue uno',
-        description: 'Issue numero 1',
-        type: 'Retraso',
-        subtype: 'Retraso en nodo',
-        state: IssueState.Open,
-        initialNode: {
-          id: 1,
-          mnemonic: 'ND.SID1',
-          name: 'Saiding 1',
-          shortName: 'SID1',
-          sectionKp: 100
-        },
-        finalNode: {
-          id: 2,
-          mnemonic: 'ND.SID2',
-          name: 'Saiding 2',
-          shortName: 'SID2',
-          sectionKp: 200
-        },
-        initialHour: '12:00:00',
-        finalHour: '16:00:00',
-        expectedFinalHour: '16:00:00',
-        tracks: [
-          {
-            id: 1,
-            mnemonic: 'TRK.SID1.1',
-            name: '1ST',
-            trackType: 'STATIONING',
-            initialNode: 'ND.SID1',
-            finalNode: null,
-            initialNodeShortName: '',
-            finalNodeShortName: ''
-          }
-        ]
-      },
-      {
-        code: 'Issue 2',
-        description: 'Issue numero 2',
-        type: 'Retraso',
-        subtype: 'Retraso en nodo',
-        state: IssueState.Open,
-        initialNode: {
-          id: 1,
-          mnemonic: 'ND.MED',
-          name: 'Medina',
-          shortName: 'Med',
-          sectionKp: 100
-        },
-        finalNode: {
-          id: 2,
-          mnemonic: 'ND.MEC',
-          name: 'Meca',
-          shortName: 'MEC',
-          sectionKp: 200
-        },
-        initialHour: '12:00:00',
-        finalHour: '16:00:00',
-        expectedFinalHour: '16:00:00',
-        tracks: [
-          {
-            id: 1,
-            mnemonic: 'TRK.MED.1',
-            name: '1ST',
-            trackType: 'STATIONING',
-            initialNode: 'ND.',
-            finalNode: null,
-            initialNodeShortName: '',
-            finalNodeShortName: ''
-          }
-        ]
-      }
-
-    ];
   }
 
 
@@ -185,7 +108,7 @@ export class IssuesComponent implements OnInit {
       console.log('Issue: '+this.issueSelected.code);
       return;
     }
-    this.issueSelected = Object.create(this.issues[i]);
+    this.issueSelected = Object.create(this.issuesService.issues[i]);
     console.log('Componente en modo: ' + this.componentState);
   }
 
@@ -237,7 +160,7 @@ export class IssuesComponent implements OnInit {
    */
   deleteIssue() {
     console.log('deleteIssue');
-    this.issues.splice(this.indexSelected, 1);
+    this.issuesService.issues.splice(this.indexSelected, 1);
     this.setState(ComponentState.Default);
   }
 
@@ -272,7 +195,7 @@ export class IssuesComponent implements OnInit {
             t.finalNodeShortName = this.getNodeShortName(t.finalNode);
           }
         );
-s      }
+      }
     );
   }
 
@@ -295,9 +218,9 @@ s      }
   saveIssue() {
     // Salvar la issue:
     if(this.componentState === ComponentState.NewIssue) {
-      this.issues.push(this.issueSelected);
+      this.issuesService.save(this.issueSelected);
     } else if(this.componentState === ComponentState.EditIssue) {
-      this.issues[this.indexSelected] = this.issueSelected;
+      this.issuesService.issues[this.indexSelected] = this.issueSelected;
     } else {
       throw new Error('Estado del componente incorrecto: '+this.componentState);
     }

@@ -7,6 +7,7 @@ import { IssuesComponent } from './issues/issues.component';
 import { NavComponent } from './nav/nav.component';
 import { TopologyService } from './topology.service';
 import { HttpClientModule } from '@angular/common/http';
+import { IssuesService } from './issues.service';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule, 
     HttpClientModule
   ],
-  providers: [TopologyService, HttpClientModule],
+  providers: [TopologyService, IssuesService, HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
