@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Issue } from './issues/issues.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { TopologyService } from './topology.service';
 
 @Injectable()
 export class IssuesService {
@@ -17,24 +18,29 @@ export class IssuesService {
   
   save(issue: Issue): void {
     let body = {
-      id: 1,
       code: issue.code,
       description: issue.description,
       type: issue.type,
       subtype: issue.subtype,
-      state: 'Abierta',
-      initialNode: issue.initialNode.mnemonic,
-      finalNode: issue.finalNode.mnemonic,
-      initialHour: new Date(),
-      finalHour: new Date(),
-      expectedFinalHour: new Date(),
-      tracks: [
-        {
-          trackMnemo: issue.tracks[0].mnemonic
-        }
-      ]
+      state: issue.state,
+      initialNode: issue.initialNode,
+      finalNode: issue.finalNode,
+      initialHour: new Date(issue.initialHour).getTime(),
+      finalHour: new Date(issue.finalHour).getTime(),
+      expectedFinalHour: new Date(issue.expectedFinalHour).getTime(), 
+      tracks: issue.tracks
     };
-
+    /*
+    let body = JSON.stringify(
+      issue, 
+      (key, value) => {
+        if(key === 'initialHour' || key === 'finalHour' || key ==='expectedFinalHour') {
+          return new Date(value).toISOString();
+        } 
+        return value;
+      }
+    );
+    */
     this.http.post('http://localhost:8080/issues', body).subscribe(
       (response) => {
         // Actualizamos las issues
@@ -49,7 +55,24 @@ export class IssuesService {
   findIssues(): void {
     this.http.get('http://localhost:8080/issues').subscribe(
       (response:any) => {
-        this.issues = response;
+        response.forEach(elem => {
+          this.issues.push({
+            id: elem.id,
+            code: elem.code,
+            description: elem.description,
+            type: elem.type,
+            subtype: elem.subtype,
+            state: elem.state,
+            initialNode: elem.initialNode,
+            finalNode: elem.finalNode,
+            initialHour: new Date(elem.initialHour),
+            finalHour: new Date(elem.finalHour),
+            expectedFinalHour: new Date(elem.expectedFinalHour),
+            tracks: elem.tracks
+          });
+          console.log(this.issues);
+          
+        });
       },
       (error) => {
         console.log('Error: Unable to get issues');

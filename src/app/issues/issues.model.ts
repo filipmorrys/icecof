@@ -2,7 +2,10 @@
  * Modelo de incidencia
  */
 export class Issue {
-    
+
+    /** Identificador de la issue */
+    id: number;
+
     /** Codigo de incidencia */
     code: string;
 
@@ -16,25 +19,25 @@ export class Issue {
     subtype: string;
 
     /** Estado de la incidencia */
-    state: IssueState;
+    state: number;
 
-    /** Nodo inicial */
-    initialNode: Node;
+    /** Mnemonico del Nodo inicial */
+    initialNode: string;
 
-    /** Nodo final */
-    finalNode: Node;
+    /** Mnemonico del Nodo final */
+    finalNode: string;
 
     /** Hora inicial */
-    initialHour: string;
+    initialHour: Date;
 
     /** Hora final */
-    finalHour: string;
+    finalHour: Date;
 
     /** Hora final esperada */
-    expectedFinalHour: string;
+    expectedFinalHour: Date;
 
-    /** Lista de tracks afectadas */
-    tracks: Array<Track>;
+    /** Lista de mnemonicos de las tracks afectadas */
+    tracks: Array<string>;
 
     constructor() {
         this.tracks = [];

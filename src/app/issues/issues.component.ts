@@ -38,11 +38,6 @@ export class IssuesComponent implements OnInit {
   indexSelected: number;
 
   /**
-   * Array de nodos de la topología
-   */
-  nodes: Array<Node>;
-
-  /**
    * Array de tracks entre los nodos seleccionados.
    * Cambia en funcion de los nodos seleccinados
    */
@@ -56,17 +51,21 @@ export class IssuesComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.formIssue);
+    console.log(new Date('2018-01-01T10:00'));
     this.indexSelected = -1;
 
     this.componentState = ComponentState.Default;
 
-    this.nodes = [];
     this.tracks = [];
-
-    this.topology.findNodes().then((response: Array<Node>) => {
-      this.nodes = response;
-    });
+    // Sincronizacion: invocamos de esta manera para
+    // que primero nos lleguen los nodos y despues las
+    // issues
+    this.topology.findNodes()
+    .then(
+      () => {
+        this.issuesService.findIssues();
+      } 
+    );
 
   }
 
@@ -105,10 +104,12 @@ export class IssuesComponent implements OnInit {
     }
     if (state === ComponentState.NewIssue) {
       this.issueSelected = new Issue();
+      this.changeTracks();
       console.log('Issue: ' + this.issueSelected.code);
       return;
     }
     this.issueSelected = Object.create(this.issuesService.issues[i]);
+    this.changeTracks();
     console.log('Componente en modo: ' + this.componentState);
   }
 
@@ -178,39 +179,29 @@ export class IssuesComponent implements OnInit {
    */
   changeTracks() {
     console.log('changeTracks');
-    if (this.issueSelected.initialNode === undefined || this.issueSelected.finalNode === undefined) {
+    if (!this.issueSelected.initialNode || !this.issueSelected.finalNode) {
       console.log('Se deben seleccionar ambos nodos');
       return;
     }
 
-    this.topology.findTracks(this.issueSelected.initialNode.id, this.issueSelected.finalNode.id)
-      .then(
+    this.topology.findTracks(
+      this.topology.getNodeIdByMnemo(this.issueSelected.initialNode), 
+      this.topology.getNodeIdByMnemo(this.issueSelected.finalNode)
+    ).then(
       (response: Array<Track>) => {
         this.tracks = response;
         this.tracks.forEach(
           (t) => {
             // Los nombres cortos de las vías no nos llegan del servidor
             // tenemos que calcularlos
-            t.initialNodeShortName = this.getNodeShortName(t.initialNode);
-            t.finalNodeShortName = this.getNodeShortName(t.finalNode);
+            t.initialNodeShortName = this.topology.getNodeByMnemo(t.initialNode).shortName;
+            t.finalNodeShortName = this.topology.getNodeByMnemo(t.finalNode).shortName;
           }
         );
       }
     );
   }
 
-  /**
-   * Devuelve el nombre corto de un nodo a partir de su mnemonico
-   * @param nodeMnemo
-   */
-  getNodeShortName(nodeMnemo: string): string {
-    for (const n of this.nodes) {
-      if (n.mnemonic === nodeMnemo) {
-        return n.shortName;
-      }
-    }
-    return '';
-  }
 
   /**
    * Salvar la issue
