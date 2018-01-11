@@ -41,7 +41,7 @@ export class IssuesService {
       }
     );
     */
-    this.http.post('http://localhost:8080/issues', body).subscribe(
+    this.http.post('http://localhost:8080//api/issues', body).subscribe(
       (response) => {
         // Actualizamos las issues
         this.findIssues();
@@ -53,7 +53,7 @@ export class IssuesService {
   }
 
   findIssues(): void {
-    this.http.get('http://localhost:8080/issues').subscribe(
+    this.http.get('http://localhost:8080/api/issues').subscribe(
       (response:any) => {
         response.forEach(elem => {
           this.issues.push({

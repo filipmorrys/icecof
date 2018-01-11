@@ -4,17 +4,17 @@
       aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">ICECOFSIM</a>
+    <a class="navbar-brand" routerLink="/issues">ICECOFSIM</a>
   
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active" #issuesMenu>
-          <a class="nav-link" href="#" (click)="clickOnIssues()">Incidencias
+          <a class="nav-link" routerLink="/issues" (click)="clickOnIssues()">Incidencias
             <span class="sr-only">(current)</span>
           </a>
         </li>
         <li class="nav-item" #workOnTracksMenu>
-          <a class="nav-link" href="#" (click)="clickOnWorkOnTracks()">Trabajos en Vía</a>
+          <a class="nav-link" routerLink="/workOnTracks" (click)="clickOnWorkOnTracks()">Trabajos en Vía</a>
         </li>
       </ul>
     </div>

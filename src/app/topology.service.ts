@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Node, Track } from './issues/issues.model';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
-const END_POINT = 'http://localhost:8080';
+const END_POINT = 'http://localhost:8080/api';
 
 @Injectable()
 export class TopologyService {
