@@ -191,7 +191,7 @@ export class IssuesComponent implements OnInit {
       (response: Array<Track>) => {
         this.tracks = response;
         this.tracks.forEach(
-          (t) => {
+          (t: Track) => {
             // Los nombres cortos de las vías no nos llegan del servidor
             // tenemos que calcularlos
             t.initialNodeShortName = this.topology.getNodeByMnemo(t.initialNode).shortName;

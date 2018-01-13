@@ -42,8 +42,7 @@
       <div class="col col-md-6 form-group">
         <label for="issueId">Incidencia</label>
         <select name="issueId" class="form-control" placeholder="Incidencia asociada">
-          <option value="1">incidencia 1</option>
-          <option value="2">incidencia 2</option>
+          <option *ngFor="let issue of issuesService.issues" [value]="issue.id">{{issue.code}}</option>
         </select>
       </div>
     </div>
@@ -88,15 +87,14 @@
       <div class="col col-md-6 form-group">
         <label for="startNode">Nodo inicial</label>
         <select name="startNode" class="form-control">
-          <option value="1">1</option>
-          <option value="2">2</option>
+          <option *ngFor="let node of topologyService.nodes" [value]="node.id">{{node.name}}</option>
+
         </select>
       </div>
       <div class="col col-md-6 form-group">
         <label for="endNode">Nodo final</label>
         <select name="endNode" class="form-control">
-          <option value="1">1</option>
-          <option value="2">2</option>
+          <option *ngFor="let node of topologyService.nodes" [value]="node.id">{{node.name}}</option>
         </select>
       </div>
     </div>
@@ -104,33 +102,31 @@
       <div class="col col-md-6 form-group">
         <label for="startNodeInclude">Nodo inicial incluído</label>
         <select name="startNodeInclude" class="form-control">
-          <option value="1">1</option>
-          <option value="2">2</option>
+          <option *ngFor="let node of topologyService.nodes" [value]="node.id">{{node.name}}</option>
         </select>
       </div>
       <div class="col col-md-6 form-group">
         <label for="endNodeInclude">Nodo final incluído</label>
         <select name="endNodeInclude" class="form-control">
-          <option value="1">1</option>
-          <option value="2">2</option>
+          <option *ngFor="let node of topologyService.nodes" [value]="node.id">{{node.name}}</option>
         </select>
       </div>
     </div>
     <div class="row">
       <div class="col col-md-12 form-group">
         <label class="custom-control custom-radio">
-          <input id="trackTypeByType" name="trackTypeBy" type="radio" class="custom-control-input">
+          <input id="trackTypeByType" name="trackTypeBy" value="1" [checked]="trackBy === 1" (change)="onChangeTrackBy(1)" type="radio" class="custom-control-input">
           <span class="custom-control-indicator"></span>
           <span class="custom-control-description">Vías por tipo</span>
         </label>
         <label class="custom-control custom-radio">
-          <input id="trackTypeByList" name="trackTypeBy" type="radio" class="custom-control-input">
+          <input id="trackTypeByList" name="trackTypeBy" value="2" [checked]="trackBy === 2" (change)="onChangeTrackBy(2)" type="radio" class="custom-control-input">
           <span class="custom-control-indicator"></span>
           <span class="custom-control-description">Vías por lista</span>
         </label>
       </div>
     </div>
-    <div class="row">
+    <div class="row" [hidden]="trackBy != 1">
       <div class="col col-md-6 form-group">
         <label for="trackType">Tipo de vía</label>
         <select name="trackType" class="form-control">
@@ -148,14 +144,14 @@
         </select>
       </div>
     </div>
-    <div class="row">
+    <div class="row" [hidden]="trackBy != 1">
       <div class="col">
         <button class="btn btn-primary">+</button>
         <button class="btn btn-primary">-</button>
       </div>
     </div>
     <br>
-    <div class="row">
+    <div class="row" [hidden]="trackBy != 2">
 
       <div class="col col-sm-4 form-group">
         <select multiple name="track" id="track" class="form-control">
@@ -170,14 +166,12 @@
           <button class="btn btn-secondary"> &#60;&#60; </button>
         </div>
       </div>
-
       <div class="col col-sm-2">
         <div>
           <p class="text-center">ELECTRIFICADO</p>
           <p class="text-center">TOTAL</p>
         </div>
       </div>
-
       <div class="col col-sm-1">
         <div>
           <button class="btn btn-secondary"> >> </button>
@@ -185,10 +179,6 @@
           <button class="btn btn-secondary"> >> </button>
         </div>
       </div>
-
-
-
-
       <div class="col col-sm-4 form-group">
         <select multiple name="selectedTrack" id="selectedTrack" class="form-control">
           <option value="1"></option>

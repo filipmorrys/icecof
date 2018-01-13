@@ -53,6 +53,7 @@ export class IssuesService {
   }
 
   findIssues(): void {
+    this.issues = [];
     this.http.get('http://localhost:8080/api/issues').subscribe(
       (response:any) => {
         response.forEach(elem => {
