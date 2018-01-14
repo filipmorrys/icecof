@@ -2,6 +2,11 @@
  * 
  */
 export class WorkOnTrack {
+
+    constructor() {
+        this.workIntervals = [new WorkInterval()];
+    }
+
     id: number;
     description: string;
     contractor: string;
@@ -17,9 +22,14 @@ export class WorkOnTrack {
  * 
  */
 export class WorkInterval {
+
+    constructor() {
+        this.tracks = [new TrackTypeEntry()];
+    }
+
     intervalId: string;
     startTime: Date;
-    endTimeDate;
+    endTimeDate: Date;
     traject: string;
     startPk: number;
     endPk: number;

@@ -143,7 +143,8 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Hora final</label>
-          <input type="datetime-local" class="form-control" name="finallHour" [ngModel]="issueSelected.finalHour | date:'yyyy-MM-ddTHH:mm'">
+          <input type="datetime-local" class="form-control" name="finallHour" [ngModel]="issueSelected.finalHour | date:'yyyy-MM-ddTHH:mm'"
+          (ngModelChange)="issueSelected.finallHour = $event">
         </div>
       </div>
     </div>
@@ -152,7 +153,8 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Hora final esperada</label>
-          <input type="datetime-local" class="form-control" name="expectedFinalHour" [ngModel]="issueSelected.expectedFinalHour | date:'yyyy-MM-ddTHH:mm'">
+          <input type="datetime-local" class="form-control" name="expectedFinalHour" [ngModel]="issueSelected.expectedFinalHour | date:'yyyy-MM-ddTHH:mm'"
+          (ngModelChange)="issueSelected.finallHour = $event">
         </div>
       </div>
       <div class="col-md-6">
