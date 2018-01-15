@@ -1,0 +1,141 @@
+<form #formInterval>
+<div class="container card card-outline-secondary" *ngIf="addingInterval">
+  <br>
+  <blockquote class="blockquote">
+    <h3>Intervalo X</h3>
+  </blockquote>
+  <div class="row">
+    <div class="col col-md-6 form-group">
+      <label for="startTime">Hora inicio</label>
+      <input type="datetime-local" name="startTime" class="form-control" placeholder="Hora inicio" [ngModel]="interval.startTime | date:'yyyy-MM-ddTHH:mm'"
+      (ngModelChange)="interval.startTime = $event">
+    </div>
+    <div class="col col-md-6 form-group">
+      <label for="endTime">Hora final</label>
+      <input type="datetime-local" name="endTime" class="form-control" placeholder="Hora final" placeholder="Hora inicio" [ngModel]="interval.endTimeDate | date:'yyyy-MM-ddTHH:mm'"
+      (ngModelChange)="interval.endTimeDate = $event">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-md-6 form-group">
+      <label for="traject">Trayecto</label>
+      <input type="text" name="traject" class="form-control" placeholder="Trayecto" [(ngModel)]="interval.traject">
+    </div>
+    <div class="col col-md-6 form-group">
+      <label for="circAffected">Circulación afectada</label>
+      <input type="text" name="circAffected" class="form-control" placeholder="Circulación afectada" [(ngModel)]="interval.circAffected">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-md-6 form-group">
+      <label for="startPk">Pk inicial</label>
+      <input type="text" name="startPk" class="form-control" placeholder="Pk inicial" [(ngModel)]="interval.startPk">
+    </div>
+    <div class="col col-md-6 form-group">
+      <label for="endPk">Pk final</label>
+      <input type="text" name="endPk" class="form-control" placeholder="Pk final" [(ngModel)]="interval.endPk">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-md-6 form-group">
+      <label for="startNode">Nodo inicial</label>
+      <select name="startNode" class="form-control" [(ngModel)]="interval.startNode" (change)="changeTracks()">
+        <option *ngFor="let node of topologyService.nodes" [value]="node.mnemonic">{{node.name}}</option>
+
+      </select>
+    </div>
+    <div class="col col-md-6 form-group">
+      <label for="endNode">Nodo final</label>
+      <select name="endNode" class="form-control" [(ngModel)]="interval.endNode" (change)="changeTracks()">
+        <option *ngFor="let node of topologyService.nodes" [value]="node.mnemonic">{{node.name}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-md-6 form-group">
+      <label for="startNodeInclude">Nodo inicial incluído</label>
+      <select name="startNodeInclude" class="form-control" [(ngModel)]="interval.startNodeInclude">
+        <option *ngFor="let node of topologyService.nodes" [value]="node.mnemonic">{{node.name}}</option>
+      </select>
+    </div>
+    <div class="col col-md-6 form-group">
+      <label for="endNodeInclude">Nodo final incluído</label>
+      <select name="endNodeInclude" class="form-control" [(ngModel)]="interval.endNodeInclude">
+        <option *ngFor="let node of topologyService.nodes" [value]="node.mnemonic">{{node.name}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="row" *ngIf="intervalType === 1">
+    <div class="col col-md-6 form-group">
+      <label for="trackType">Tipo de vía</label>
+      <select name="trackType" class="form-control" [(ngModel)]="interval.tracks[0].trackType">
+        <option value="EVEN">Pares</option>
+        <option value="ODD">Impares</option>
+        <option value="BOTH ">Ambas</option>
+        <option value="STATION">Estación</option>
+      </select>
+    </div>
+    <div class="col col-md-6 form-group">
+      <label for="cutType">Tipo de corte</label>
+      <select name="cutType" class="form-control" [(ngModel)]="interval.tracks[0].cutType">
+        <option value="ELECT">Eléctrico</option>
+        <option value="TOTAL">Total</option>
+      </select>
+    </div>
+  </div>
+  <div class="row" *ngIf="intervalType === 1">
+    <div class="col">
+      <button class="btn btn-primary">+</button>
+      <button class="btn btn-primary">-</button>
+    </div>
+  </div>
+  <br>
+  <div class="row" *ngIf="intervalType === 2">
+
+    <div class="col col-sm-4 form-group">
+      <select multiple name="track" id="track" class="form-control" [(ngModel)]="interval.tracks[0].id">
+        <option *ngFor="let t of tracks" [value]="t.id"> 
+          Via {{t.name}} ({{t.initialNodeShortName}}
+          <span *ngIf="t.initialNodeShortName != t.finalNodeShortName">-{{t.finalNodeShortName}}</span>
+          )
+        </option>
+        
+      </select>
+    </div>
+    <div class="col col-sm-1">
+      <div>
+        <button class="btn btn-secondary"> &#60;&#60;</button>
+        <br>
+        <button class="btn btn-secondary"> &#60;&#60; </button>
+      </div>
+    </div>
+    <div class="col col-sm-2">
+      <div>
+        <p class="text-center">ELECTRIFICADO</p>
+        <p class="text-center">TOTAL</p>
+      </div>
+    </div>
+    <div class="col col-sm-1">
+      <div>
+        <button class="btn btn-secondary"> >> </button>
+        <br>
+        <button class="btn btn-secondary"> >> </button>
+      </div>
+    </div>
+    <div class="col col-sm-4 form-group">
+      <select multiple name="selectedTrack" id="selectedTrack" class="form-control">
+        <option value="1"></option>
+        <option value="2"></option>
+      </select>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary" (click)="onSave()">Guardar</button>
+      <button class="btn btn-primary">Cancelar</button>
+    </div>
+  </div>
+  <br>
+</div>
+</form>

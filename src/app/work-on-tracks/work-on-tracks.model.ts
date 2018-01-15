@@ -4,7 +4,7 @@
 export class WorkOnTrack {
 
     constructor() {
-        this.workIntervals = [new WorkInterval()];
+        this.workIntervals = [];
     }
 
     id: number;
@@ -24,7 +24,8 @@ export class WorkOnTrack {
 export class WorkInterval {
 
     constructor() {
-        this.tracks = [new TrackTypeEntry()];
+        this.tracks = [];
+    
     }
 
     intervalId: string;

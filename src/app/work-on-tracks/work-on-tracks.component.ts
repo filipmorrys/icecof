@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IssuesService } from '../issues.service';
 import { TopologyService } from '../topology.service';
-import { WorkOnTrack, TrackTypeEntry, TrackId } from './work-on-tracks.model';
+import { WorkOnTrack, TrackTypeEntry, TrackId, WorkInterval } from './work-on-tracks.model';
 
 @Component({
   selector: 'app-work-on-tracks',
@@ -16,31 +16,40 @@ export class WorkOnTracksComponent implements OnInit {
    */
   trackBy: number;
 
+  /**
+   * WorkOnTrack que esta siendo editado
+   */
   workOnTrack: WorkOnTrack;
+
+  /**
+   * Flag que indica que se está creando un intervalo dentro del trabajo en vía
+   */
+  addingInterval: boolean;
+
+  /**
+   * Tipo de intervalo que se está creando
+   * Si intervalType === 1 intervalo por tipo
+   * Si intervalType === 2 intervalo por lista
+   */
+  intervalType: number;
 
   constructor(private issuesService: IssuesService,
     private topologyService: TopologyService) {
   }
 
   ngOnInit() {
+    // Obtenemos los nodos de la topologia
+    this.topologyService.findNodes().then(() => { this.issuesService.findIssues(); });    
+    // Inicialización del WorkOnTrack
     this.workOnTrack = new WorkOnTrack();
-    this.topologyService.findNodes()
-      .then(() => { this.issuesService.findIssues(); });
-
+    // Valores por defecto
     this.trackBy = 1;
-    
-
+    this.addingInterval = false;
+    this.intervalType = 1;
   }
 
-  onChangeTrackBy(selectedTrackBy: number) {
-    if (this.trackBy != selectedTrackBy) {
-      if (selectedTrackBy === 1) {
-        this.workOnTrack.workIntervals[0].tracks = [new TrackTypeEntry()];
-      } else {
-        this.workOnTrack.workIntervals[0].tracks = [new TrackId()];
-      }
-    }
-    this.trackBy = selectedTrackBy;
+  onSaveInterval(interval: WorkInterval) {
+    this.workOnTrack.workIntervals.push(interval);
+    this.addingInterval = false;
   }
-
 }

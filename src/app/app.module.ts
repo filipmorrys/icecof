@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { IssuesService } from './issues.service';
 import { WorkOnTracksComponent } from './work-on-tracks/work-on-tracks.component';
 import { AppRoutingModule } from './/app-routing.module';
+import { IntervalsComponent } from './work-on-tracks/intervals/intervals.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { AppRoutingModule } from './/app-routing.module';
     AppComponent,
     IssuesComponent,
     NavComponent,
-    WorkOnTracksComponent
+    WorkOnTracksComponent,
+    IntervalsComponent
   ],
   imports: [
     BrowserModule,

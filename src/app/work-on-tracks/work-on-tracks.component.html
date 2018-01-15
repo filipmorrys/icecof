@@ -46,149 +46,17 @@
         </select>
       </div>
     </div>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-primary" (click)="addingInterval = true; intervalType = 1">Añadir intervalo por tipo</button>
+        <button class="btn btn-primary" (click)="addingInterval = true; intervalType = 2">Añadir intervalo por lista</button>
+      </div>
+    </div>
+    <br>
   </div>
   <br>
-  <div class="container card card-outline-secondary">
-    <br>
-    <blockquote class="blockquote">
-      <h3>Intervalo X</h3>
-    </blockquote>
-    <div class="row">
-      <div class="col col-md-6 form-group">
-        <label for="startTime">Hora inicio</label>
-        <input type="datetime-local" name="startTime" class="form-control" placeholder="Hora inicio" [ngModel]="workOnTrack.workIntervals[0].startTime | date:'yyyy-MM-ddTHH:mm'"
-        (ngModelChange)="workOnTrack.workIntervals[0].startTime = $event">
-      </div>
-      <div class="col col-md-6 form-group">
-        <label for="endTime">Hora final</label>
-        <input type="datetime-local" name="endTime" class="form-control" placeholder="Hora final" placeholder="Hora inicio" [ngModel]="workOnTrack.workIntervals[0].endTimeDate | date:'yyyy-MM-ddTHH:mm'"
-        (ngModelChange)="workOnTrack.workIntervals[0].endTimeDate = $event">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col col-md-6 form-group">
-        <label for="traject">Trayecto</label>
-        <input type="text" name="traject" class="form-control" placeholder="Trayecto" [(ngModel)]="workOnTrack.workIntervals[0].traject">
-      </div>
-      <div class="col col-md-6 form-group">
-        <label for="circAffected">Circulación afectada</label>
-        <input type="text" name="circAffected" class="form-control" placeholder="Circulación afectada" [(ngModel)]="workOnTrack.workIntervals[0].circAffected">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col col-md-6 form-group">
-        <label for="startPk">Pk inicial</label>
-        <input type="text" name="startPk" class="form-control" placeholder="Pk inicial" [(ngModel)]="workOnTrack.workIntervals[0].startPk">
-      </div>
-      <div class="col col-md-6 form-group">
-        <label for="endPk">Pk final</label>
-        <input type="text" name="endPk" class="form-control" placeholder="Pk final" [(ngModel)]="workOnTrack.workIntervals[0].endPk">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col col-md-6 form-group">
-        <label for="startNode">Nodo inicial</label>
-        <select name="startNode" class="form-control" [(ngModel)]="workOnTrack.workIntervals[0].startNode">
-          <option *ngFor="let node of topologyService.nodes" [value]="node.id">{{node.name}}</option>
 
-        </select>
-      </div>
-      <div class="col col-md-6 form-group">
-        <label for="endNode">Nodo final</label>
-        <select name="endNode" class="form-control" [(ngModel)]="workOnTrack.workIntervals[0].endNode">
-          <option *ngFor="let node of topologyService.nodes" [value]="node.id">{{node.name}}</option>
-        </select>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col col-md-6 form-group">
-        <label for="startNodeInclude">Nodo inicial incluído</label>
-        <select name="startNodeInclude" class="form-control" [(ngModel)]="workOnTrack.workIntervals[0].startNodeInclude">
-          <option *ngFor="let node of topologyService.nodes" [value]="node.id">{{node.name}}</option>
-        </select>
-      </div>
-      <div class="col col-md-6 form-group">
-        <label for="endNodeInclude">Nodo final incluído</label>
-        <select name="endNodeInclude" class="form-control" [(ngModel)]="workOnTrack.workIntervals[0].endNodeInclude">
-          <option *ngFor="let node of topologyService.nodes" [value]="node.id">{{node.name}}</option>
-        </select>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col col-md-12 form-group">
-        <label class="custom-control custom-radio">
-          <input id="trackTypeByType" name="trackTypeBy" value="1" [checked]="trackBy === 1" (change)="onChangeTrackBy(1)" type="radio" class="custom-control-input">
-          <span class="custom-control-indicator"></span>
-          <span class="custom-control-description">Vías por tipo</span>
-        </label>
-        <label class="custom-control custom-radio">
-          <input id="trackTypeByList" name="trackTypeBy" value="2" [checked]="trackBy === 2" (change)="onChangeTrackBy(2)" type="radio" class="custom-control-input">
-          <span class="custom-control-indicator"></span>
-          <span class="custom-control-description">Vías por lista</span>
-        </label>
-      </div>
-    </div>
-    <div class="row" [hidden]="trackBy != 1">
-      <div class="col col-md-6 form-group">
-        <label for="trackType">Tipo de vía</label>
-        <select name="trackType" class="form-control" [(ngModel)]="workOnTrack.workIntervals[0].tracks[0].trackType">
-          <option value="EVEN">Pares</option>
-          <option value="ODD">Impares</option>
-          <option value="BOTH ">Ambas</option>
-          <option value="STATION">Estación</option>
-        </select>
-      </div>
-      <div class="col col-md-6 form-group">
-        <label for="cutType">Tipo de corte</label>
-        <select name="cutType" class="form-control" [(ngModel)]="workOnTrack.workIntervals[0].tracks[0].cutType">
-          <option value="ELECT">Eléctrico</option>
-          <option value="TOTAL">Total</option>
-        </select>
-      </div>
-    </div>
-    <div class="row" [hidden]="trackBy != 1">
-      <div class="col">
-        <button class="btn btn-primary">+</button>
-        <button class="btn btn-primary">-</button>
-      </div>
-    </div>
-    <br>
-    <div class="row" [hidden]="trackBy != 2">
+  <app-intervals [addingInterval]="addingInterval" [intervalType]="intervalType"
+    (saveInterval)="onSaveInterval($event)"></app-intervals>
 
-      <div class="col col-sm-4 form-group">
-        <select multiple name="track" id="track" class="form-control" [(ngModel)]="workOnTrack.workIntervals[0].tracks[0].id">
-          <option value="1"></option>
-          <option value="2"></option>
-        </select>
-      </div>
-      <div class="col col-sm-1">
-        <div>
-          <button class="btn btn-secondary"> &#60;&#60;</button>
-          <br>
-          <button class="btn btn-secondary"> &#60;&#60; </button>
-        </div>
-      </div>
-      <div class="col col-sm-2">
-        <div>
-          <p class="text-center">ELECTRIFICADO</p>
-          <p class="text-center">TOTAL</p>
-        </div>
-      </div>
-      <div class="col col-sm-1">
-        <div>
-          <button class="btn btn-secondary"> >> </button>
-          <br>
-          <button class="btn btn-secondary"> >> </button>
-        </div>
-      </div>
-      <div class="col col-sm-4 form-group">
-        <select multiple name="selectedTrack" id="selectedTrack" class="form-control">
-          <option value="1"></option>
-          <option value="2"></option>
-        </select>
-      </div>
-
-
-    </div>
-  </div>
 </form>
