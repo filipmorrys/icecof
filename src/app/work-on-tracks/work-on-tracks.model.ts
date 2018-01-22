@@ -39,23 +39,26 @@ export class WorkInterval {
     startNodeInclude: string;
     endNodeInclude: string;
     circAffected: string;
-    tracks: Array<TrackTypeEntry | TrackId>;
+    tracks: Array<TrackTypeEntry | TrackIdEntry>;
+}
+
+
+export class TrackEntry {
+    cutType: number;
 }
 
 /**
  * 
  */
-export class TrackTypeEntry {
-    trackType: TrackType;
-    cutType: CutType;
+export class TrackTypeEntry extends TrackEntry {
+    trackType: number;
 }
 
 /**
  * 
  */
-export class TrackId {
+export class TrackIdEntry extends TrackEntry {
     id: number;
-    cutType: CutType;
 }
 
 /**

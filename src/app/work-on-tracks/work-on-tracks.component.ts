@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IssuesService } from '../issues.service';
 import { TopologyService } from '../topology.service';
-import { WorkOnTrack, TrackTypeEntry, TrackId, WorkInterval } from './work-on-tracks.model';
+import { WorkOnTrack, TrackTypeEntry, TrackIdEntry, WorkInterval } from './work-on-tracks.model';
 
 @Component({
   selector: 'app-work-on-tracks',

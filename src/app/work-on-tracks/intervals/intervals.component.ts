@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { WorkInterval, TrackTypeEntry, TrackId } from '../work-on-tracks.model';
+import { WorkInterval, TrackTypeEntry, TrackIdEntry } from '../work-on-tracks.model';
 import { TopologyService } from '../../topology.service';
 import { Track } from '../../issues/issues.model';
 import { ViewChild } from '@angular/core';
@@ -57,7 +57,7 @@ export class IntervalsComponent implements OnInit {
       this.interval.tracks.push(new TrackTypeEntry());
     }
     else {
-      this.interval.tracks.push(new TrackId());
+      this.interval.tracks.push(new TrackIdEntry());
     }
   }
 
@@ -87,13 +87,21 @@ export class IntervalsComponent implements OnInit {
           }
         );
       }
-    );
+      );
   }
 
-  onSave(){
+  onSave() {
     console.log("Ale guardadito");
     this.saveInterval.emit(this.interval);
     this.formInterval.nativeElement.reset();
     this.initWorkInterval()
+  }
+  /**
+   * Obtiene las vías del componente hijo
+   */
+  onSelectTracks(ev: Array<TrackIdEntry | TrackTypeEntry>) {
+    console.log('onSelectTracks');
+    console.log(ev);
+    this.interval.tracks = ev;
   }
 }

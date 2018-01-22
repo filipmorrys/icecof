@@ -65,70 +65,7 @@
       </select>
     </div>
   </div>
-  <div class="row" *ngIf="intervalType === 1">
-    <div class="col col-md-6 form-group">
-      <label for="trackType">Tipo de vía</label>
-      <select name="trackType" class="form-control" [(ngModel)]="interval.tracks[0].trackType">
-        <option value="EVEN">Pares</option>
-        <option value="ODD">Impares</option>
-        <option value="BOTH ">Ambas</option>
-        <option value="STATION">Estación</option>
-      </select>
-    </div>
-    <div class="col col-md-6 form-group">
-      <label for="cutType">Tipo de corte</label>
-      <select name="cutType" class="form-control" [(ngModel)]="interval.tracks[0].cutType">
-        <option value="ELECT">Eléctrico</option>
-        <option value="TOTAL">Total</option>
-      </select>
-    </div>
-  </div>
-  <div class="row" *ngIf="intervalType === 1">
-    <div class="col">
-      <button class="btn btn-primary">+</button>
-      <button class="btn btn-primary">-</button>
-    </div>
-  </div>
-  <br>
-  <div class="row" *ngIf="intervalType === 2">
-
-    <div class="col col-sm-4 form-group">
-      <select multiple name="track" id="track" class="form-control" [(ngModel)]="interval.tracks[0].id">
-        <option *ngFor="let t of tracks" [value]="t.id"> 
-          Via {{t.name}} ({{t.initialNodeShortName}}
-          <span *ngIf="t.initialNodeShortName != t.finalNodeShortName">-{{t.finalNodeShortName}}</span>
-          )
-        </option>
-        
-      </select>
-    </div>
-    <div class="col col-sm-1">
-      <div>
-        <button class="btn btn-secondary"> &#60;&#60;</button>
-        <br>
-        <button class="btn btn-secondary"> &#60;&#60; </button>
-      </div>
-    </div>
-    <div class="col col-sm-2">
-      <div>
-        <p class="text-center">ELECTRIFICADO</p>
-        <p class="text-center">TOTAL</p>
-      </div>
-    </div>
-    <div class="col col-sm-1">
-      <div>
-        <button class="btn btn-secondary"> >> </button>
-        <br>
-        <button class="btn btn-secondary"> >> </button>
-      </div>
-    </div>
-    <div class="col col-sm-4 form-group">
-      <select multiple name="selectedTrack" id="selectedTrack" class="form-control">
-        <option value="1"></option>
-        <option value="2"></option>
-      </select>
-    </div>
-  </div>
+  <app-track-selector [intervalTypeBy]="intervalType" [tracks]="tracks" (onSelectTracks)="onSelectTracks($event)"></app-track-selector>
   <br>
   <div class="row">
     <div class="col">
