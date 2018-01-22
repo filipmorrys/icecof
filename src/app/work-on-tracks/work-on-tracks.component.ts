@@ -39,7 +39,7 @@ export class WorkOnTracksComponent implements OnInit {
 
   ngOnInit() {
     // Obtenemos los nodos de la topologia
-    this.topologyService.findNodes().then(() => { this.issuesService.findIssues(); });    
+    this.topologyService.findNodes().then(() => { this.issuesService.findIssues(); });
     // Inicialización del WorkOnTrack
     this.workOnTrack = new WorkOnTrack();
     // Valores por defecto
@@ -50,6 +50,10 @@ export class WorkOnTracksComponent implements OnInit {
 
   onSaveInterval(interval: WorkInterval) {
     this.workOnTrack.workIntervals.push(interval);
+    this.addingInterval = false;
+  }
+
+  onCancelInterval(ev: boolean) {
     this.addingInterval = false;
   }
 }

@@ -26,6 +26,8 @@ export class IntervalsComponent implements OnInit {
 
   @Output() saveInterval = new EventEmitter<WorkInterval>();
 
+  @Output() cancelInterval = new EventEmitter<boolean>();
+
   @ViewChild('formInterval') formInterval: ElementRef;
 
   /**
@@ -89,12 +91,20 @@ export class IntervalsComponent implements OnInit {
       }
       );
   }
-
+  /**
+   * Salva un intervalo
+   */
   onSave() {
     console.log("Ale guardadito");
     this.saveInterval.emit(this.interval);
     this.formInterval.nativeElement.reset();
-    this.initWorkInterval()
+    this.initWorkInterval();
+  }
+
+  onCancel(){
+    console.log("cancelado");
+    this.cancelInterval.emit(true);
+    this.formInterval.nativeElement.reset();
   }
   /**
    * Obtiene las vías del componente hijo
