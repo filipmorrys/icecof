@@ -1,17 +1,18 @@
-import { Component, OnInit, Output, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, ElementRef, SimpleChanges } from '@angular/core';
 import { TopologyService } from '../../topology.service';
 import { Input } from '@angular/core';
 import { Track } from '../../issues/issues.model';
 import { EventEmitter } from '@angular/core';
 import { TrackTypeEntry, TrackIdEntry, TrackType } from '../work-on-tracks.model';
 import { ViewChild } from '@angular/core';
+import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-track-selector',
   templateUrl: './track-selector.component.html',
   styleUrls: ['./track-selector.component.css']
 })
-export class TrackSelectorComponent implements OnInit {
+export class TrackSelectorComponent implements OnInit, OnChanges {
 
   /**
    * Array de tracks
@@ -39,6 +40,10 @@ export class TrackSelectorComponent implements OnInit {
 
   ngOnInit() {
     this.origSelectedItems = [];
+    this.destSelectedItems = [];
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.destSelectedItems = [];
   }
 
