@@ -25,10 +25,19 @@ export class IntervalsComponent implements OnInit, OnChanges {
    */
   @Input() intervalType: number;
 
+  /**
+   * Evento de salida que se da cuando salvamos un intervalo
+   */
   @Output() saveInterval = new EventEmitter<WorkInterval>();
 
+  /**
+   * Evento de salida que se da cuando se cancela el intervalo
+   */
   @Output() cancelInterval = new EventEmitter<boolean>();
 
+  /**
+   * Referencia al formulario de intervalos
+   */
   @ViewChild('formInterval') formInterval: ElementRef;
 
   /**

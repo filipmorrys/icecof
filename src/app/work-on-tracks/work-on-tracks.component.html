@@ -1,4 +1,4 @@
-<form action="">
+<form action="" #formWorkOnTrack="ngForm">
   <div class="container card card-outline-secondary">
     <br>
     <blockquote class="blockquote">
@@ -7,41 +7,46 @@
     <div class="row">
       <div class="col col-md-6 form-group">
         <label for="description">Descripcion</label>
-        <input type="text" name="description" class="form-control" placeholder="Descripción" [(ngModel)]="workOnTrack.description">
+        <input type="text" name="description" class="form-control" placeholder="Descripción" [(ngModel)]="workOnTrack.description"
+          required>
       </div>
       <div class="col col-md-6 form-group">
         <label for="contractor">Contractor</label>
-        <input type="text" name="contractor" class="form-control" placeholder="Contractor" [(ngModel)]="workOnTrack.contractor">
+        <input type="text" name="contractor" class="form-control" placeholder="Contractor" [(ngModel)]="workOnTrack.contractor" required>
       </div>
     </div>
     <div class="row">
       <div class="col col-md-6 form-group">
         <label for="workClass">Clase de trabajo</label>
-        <input type="text" name="workClass" class="form-control" placeholder="Clase de trabajo" [(ngModel)]="workOnTrack.workOnTrackClass">
+        <input type="text" name="workClass" class="form-control" placeholder="Clase de trabajo" [(ngModel)]="workOnTrack.workOnTrackClass"
+          required>
       </div>
       <div class="col col-md-6 form-group">
         <label for="personContact">Persona de contacto</label>
-        <input type="text" name="personContact" class="form-control" placeholder="Persona de contacto" [(ngModel)]="workOnTrack.personContact">
+        <input type="text" name="personContact" class="form-control" placeholder="Persona de contacto" [(ngModel)]="workOnTrack.personContact"
+          required>
       </div>
     </div>
     <div class="row">
       <div class="col col-md-6 form-group">
         <label for="phone">Teléfono</label>
-        <input type="text" name="phone" class="form-control" placeholder="Teléfono" [(ngModel)]="workOnTrack.phone">
+        <input type="text" name="phone" class="form-control" placeholder="Teléfono" [(ngModel)]="workOnTrack.phone" required pattern="\d+">
       </div>
       <div class="col col-md-6 form-group">
         <label for="responsable">Responsable</label>
-        <input type="text" name="responsable" class="form-control" placeholder="Responsable" [(ngModel)]="workOnTrack.responsable">
+        <input type="text" name="responsable" class="form-control" placeholder="Responsable" [(ngModel)]="workOnTrack.responsable"
+          required>
       </div>
     </div>
     <div class="row">
       <div class="col col-md-6 form-group">
         <label for="occupationZone">Zona de ocupación</label>
-        <input type="text" name="occupationZone" class="form-control" placeholder="Zona de ocupación" [(ngModel)]="workOnTrack.occupationZone">
+        <input type="text" name="occupationZone" class="form-control" placeholder="Zona de ocupación" [(ngModel)]="workOnTrack.occupationZone"
+          required>
       </div>
       <div class="col col-md-6 form-group">
         <label for="issueId">Incidencia</label>
-        <select name="issueId" class="form-control" placeholder="Incidencia asociada" [(ngModel)]="workOnTrack.issueId">
+        <select name="issueId" class="form-control" placeholder="Incidencia asociada" [(ngModel)]="workOnTrack.issueId" required>
           <option *ngFor="let issue of issuesService.issues" [value]="issue.id">{{issue.code}}</option>
         </select>
       </div>
@@ -68,7 +73,7 @@
         </table>
       </div>
     </div>
-  
+
     <div class="row">
       <div class="col">
         <button class="btn btn-primary" (click)="addingInterval = true; intervalType = 1">Añadir intervalo por tipo</button>
@@ -76,8 +81,14 @@
       </div>
     </div>
     <br>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-primary" (click)="saveWorkOnTrack()" [disabled]="formWorkOnTrack.invalid || workOnTrack.workIntervals.length === 0">Guardar</button>
+      </div>
+    </div>
+    <br>
   </div>
-  
+
   <br>
 
   <app-intervals [addingInterval]="addingInterval" [intervalType]="intervalType" (saveInterval)="onSaveInterval($event)" (cancelInterval)="onCancelInterval($event)"></app-intervals>

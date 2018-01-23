@@ -1,4 +1,4 @@
-<form #formInterval>
+<form #formInterval="ngForm">
   <div class="container card card-outline-secondary" *ngIf="addingInterval">
     <br>
     <blockquote class="blockquote">
@@ -8,45 +8,45 @@
       <div class="col col-md-6 form-group">
         <label for="startTime">Hora inicio</label>
         <input type="datetime-local" name="startTime" class="form-control" placeholder="Hora inicio" [ngModel]="interval.startTime | date:'yyyy-MM-ddTHH:mm'"
-          (ngModelChange)="interval.startTime = $event">
+          (ngModelChange)="interval.startTime = $event" required>
       </div>
       <div class="col col-md-6 form-group">
         <label for="endTime">Hora final</label>
         <input type="datetime-local" name="endTime" class="form-control" placeholder="Hora final" placeholder="Hora inicio" [ngModel]="interval.endTime | date:'yyyy-MM-ddTHH:mm'"
-          (ngModelChange)="interval.endTime = $event">
+          (ngModelChange)="interval.endTime = $event" required>
       </div>
     </div>
     <div class="row">
       <div class="col col-md-6 form-group">
         <label for="traject">Trayecto</label>
-        <input type="text" name="traject" class="form-control" placeholder="Trayecto" [(ngModel)]="interval.traject">
+        <input type="text" name="traject" class="form-control" placeholder="Trayecto" [(ngModel)]="interval.traject" required>
       </div>
       <div class="col col-md-6 form-group">
         <label for="circAffected">Circulación afectada</label>
-        <input type="text" name="circAffected" class="form-control" placeholder="Circulación afectada" [(ngModel)]="interval.circAffected">
+        <input type="text" name="circAffected" class="form-control" placeholder="Circulación afectada" [(ngModel)]="interval.circAffected" required>
       </div>
     </div>
     <div class="row">
       <div class="col col-md-6 form-group">
         <label for="startPk">Pk inicial</label>
-        <input type="text" name="startPk" class="form-control" placeholder="Pk inicial" [(ngModel)]="interval.startPk">
+        <input type="text" name="startPk" class="form-control" placeholder="Pk inicial" [(ngModel)]="interval.startPk" required>
       </div>
       <div class="col col-md-6 form-group">
         <label for="endPk">Pk final</label>
-        <input type="text" name="endPk" class="form-control" placeholder="Pk final" [(ngModel)]="interval.endPk">
+        <input type="text" name="endPk" class="form-control" placeholder="Pk final" [(ngModel)]="interval.endPk" required>
       </div>
     </div>
     <div class="row">
       <div class="col col-md-6 form-group">
         <label for="startNode">Nodo inicial</label>
-        <select name="startNode" class="form-control" [(ngModel)]="interval.startNode" (change)="changeTracks()">
+        <select name="startNode" class="form-control" [(ngModel)]="interval.startNode" (change)="changeTracks()" required>
           <option *ngFor="let node of topologyService.nodes" [value]="node.mnemonic">{{node.name}}</option>
 
         </select>
       </div>
       <div class="col col-md-6 form-group">
         <label for="endNode">Nodo final</label>
-        <select name="endNode" class="form-control" [(ngModel)]="interval.endNode" (change)="changeTracks()">
+        <select name="endNode" class="form-control" [(ngModel)]="interval.endNode" (change)="changeTracks()" required>
           <option *ngFor="let node of topologyService.nodes" [value]="node.mnemonic">{{node.name}}</option>
         </select>
       </div>
@@ -69,7 +69,7 @@
     <br>
     <div class="row">
       <div class="col">
-        <button class="btn btn-primary" (click)="onSave()">Guardar</button>
+        <button class="btn btn-primary" (click)="onSave()" [disabled]="formInterval.invalid ||interval.tracks.length === 0">Guardar</button>
         <button class="btn btn-primary" (click)="onCancel()">Cancelar</button>
       </div>
     </div>

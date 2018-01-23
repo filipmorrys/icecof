@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IssuesService } from '../issues.service';
 import { TopologyService } from '../topology.service';
 import { WorkOnTrack, TrackTypeEntry, TrackIdEntry, WorkInterval } from './work-on-tracks.model';
+import { ViewChild } from '@angular/core';
+import { ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-work-on-tracks',
@@ -33,11 +35,15 @@ export class WorkOnTracksComponent implements OnInit {
    */
   intervalType: number;
 
+  @ViewChild('formWorkOnTrack') formWorkOnTrack: ElementRef;
+
   constructor(private issuesService: IssuesService,
     private topologyService: TopologyService) {
   }
 
   ngOnInit() {
+    console.log(this.formWorkOnTrack);
+
     // Obtenemos los nodos de la topologia
     this.topologyService.findNodes().then(() => { this.issuesService.findIssues(); });
     // Inicialización del WorkOnTrack
@@ -57,5 +63,9 @@ export class WorkOnTracksComponent implements OnInit {
 
   onCancelInterval(ev: boolean) {
     this.addingInterval = false;
+  }
+
+  saveWorkOnTrack() {
+
   }
 }
