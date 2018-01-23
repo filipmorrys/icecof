@@ -30,7 +30,7 @@ export class WorkInterval {
 
     intervalId: string;
     startTime: Date;
-    endTimeDate: Date;
+    endTime: Date;
     traject: string;
     startPk: number;
     endPk: number;

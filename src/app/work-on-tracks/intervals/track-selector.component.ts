@@ -70,7 +70,6 @@ export class TrackSelectorComponent implements OnInit, OnChanges {
    * Devuelve los elementos a mostrar en el combo origen.
    */
   getItems(): Array<Object> | Array<Track> {
-    console.log('intervalTypeBy: ' + this.intervalTypeBy);
     if (this.intervalTypeBy === 1) {
       return [
         { id: 0, name: this.getTrackTypeById(0) },

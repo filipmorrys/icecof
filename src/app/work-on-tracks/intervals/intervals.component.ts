@@ -1,16 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { WorkInterval, TrackTypeEntry, TrackIdEntry } from '../work-on-tracks.model';
 import { TopologyService } from '../../topology.service';
 import { Track } from '../../issues/issues.model';
 import { ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
+import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-intervals',
   templateUrl: './intervals.component.html',
   styleUrls: ['./intervals.component.css']
 })
-export class IntervalsComponent implements OnInit {
+export class IntervalsComponent implements OnInit, OnChanges {
 
   /**
    * Flag que indica que se está creando un intervalo dentro del trabajo en vía
@@ -48,6 +49,12 @@ export class IntervalsComponent implements OnInit {
   ngOnInit() {
     this.topologyService.findNodes();
     this.initWorkInterval();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.addingInterval) {
+      this.initWorkInterval();
+    }
   }
 
   /**
@@ -95,23 +102,22 @@ export class IntervalsComponent implements OnInit {
    * Salva un intervalo
    */
   onSave() {
-    console.log("Ale guardadito");
-    this.saveInterval.emit(this.interval);
-    this.formInterval.nativeElement.reset();
-    this.initWorkInterval();
+    console.log("Guardado de intervalo");
+    let copy = Object.create(this.interval);
+    this.saveInterval.emit(copy);
+    //this.formInterval.nativeElement.reset();
+    //this.initWorkInterval();
   }
 
   onCancel(){
-    console.log("cancelado");
+    console.log("Intervalo cancelado");
     this.cancelInterval.emit(true);
-    this.formInterval.nativeElement.reset();
+    //this.formInterval.nativeElement.reset();
   }
   /**
    * Obtiene las vías del componente hijo
    */
   onSelectTracks(ev: Array<TrackIdEntry | TrackTypeEntry>) {
-    console.log('onSelectTracks');
-    console.log(ev);
     this.interval.tracks = ev;
   }
 }

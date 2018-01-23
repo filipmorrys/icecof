@@ -7,7 +7,7 @@
     <div class="row">
       <div class="col col-md-6 form-group">
         <label for="description">Descripcion</label>
-        <input type="text" name="description" class="form-control" placeholder="Descripción" [(ngModel)]="workOnTrack.description" >
+        <input type="text" name="description" class="form-control" placeholder="Descripción" [(ngModel)]="workOnTrack.description">
       </div>
       <div class="col col-md-6 form-group">
         <label for="contractor">Contractor</label>
@@ -48,15 +48,38 @@
     </div>
     <div class="row">
       <div class="col">
+        <table class="table table-bordered" #tableIntervals>
+          <thead class="thead">
+            <tr>
+              <th>Nodo Inicio</th>
+              <th>Nodo Fin</th>
+              <th>Hora de inicio</th>
+              <th>Hora de fin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let wot of workOnTrack.workIntervals; let i = index" id='row_{{i}}' (click)='clickRow(i)'>
+              <td>{{ topologyService.getNodeByMnemo(wot.startNode).name }}</td>
+              <td>{{ topologyService.getNodeByMnemo(wot.endNode).name }}</td>
+              <td scope="row">{{ wot.startTime | date:"dd/MM/yyyy HH:mm" }}</td>
+              <td scope="row">{{ wot.endTime | date: "dd/MM/yyyy HH:mm" }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col">
         <button class="btn btn-primary" (click)="addingInterval = true; intervalType = 1">Añadir intervalo por tipo</button>
         <button class="btn btn-primary" (click)="addingInterval = true; intervalType = 2">Añadir intervalo por lista</button>
       </div>
     </div>
     <br>
   </div>
+  
   <br>
 
-  <app-intervals [addingInterval]="addingInterval" [intervalType]="intervalType"
-    (saveInterval)="onSaveInterval($event)" (cancelInterval)="onCancelInterval($event)"></app-intervals>
+  <app-intervals [addingInterval]="addingInterval" [intervalType]="intervalType" (saveInterval)="onSaveInterval($event)" (cancelInterval)="onCancelInterval($event)"></app-intervals>
 
 </form>

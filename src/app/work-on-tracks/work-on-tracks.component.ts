@@ -49,6 +49,8 @@ export class WorkOnTracksComponent implements OnInit {
   }
 
   onSaveInterval(interval: WorkInterval) {
+    console.log('onSaveInterval');
+    console.log(interval);
     this.workOnTrack.workIntervals.push(interval);
     this.addingInterval = false;
   }

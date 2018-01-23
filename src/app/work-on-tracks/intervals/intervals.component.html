@@ -12,8 +12,8 @@
       </div>
       <div class="col col-md-6 form-group">
         <label for="endTime">Hora final</label>
-        <input type="datetime-local" name="endTime" class="form-control" placeholder="Hora final" placeholder="Hora inicio" [ngModel]="interval.endTimeDate | date:'yyyy-MM-ddTHH:mm'"
-          (ngModelChange)="interval.endTimeDate = $event">
+        <input type="datetime-local" name="endTime" class="form-control" placeholder="Hora final" placeholder="Hora inicio" [ngModel]="interval.endTime | date:'yyyy-MM-ddTHH:mm'"
+          (ngModelChange)="interval.endTime = $event">
       </div>
     </div>
     <div class="row">
