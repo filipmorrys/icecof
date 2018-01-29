@@ -4,9 +4,9 @@ import { IssuesComponent } from './issues/issues.component';
 import { WorkOnTracksComponent } from './work-on-tracks/work-on-tracks.component';
 
 const routes: Routes = [
-  { path: '', component: IssuesComponent },
-  { path: 'issues', component: IssuesComponent },
-  { path: 'workOnTracks', component: WorkOnTracksComponent },
+  { path: '', component: IssuesComponent , pathMatch: 'full' },
+  { path: 'issues', component: IssuesComponent , pathMatch: 'full' },
+  { path: 'workOnTracks', component: WorkOnTracksComponent , pathMatch: 'full' },
 ];
 
 @NgModule({
