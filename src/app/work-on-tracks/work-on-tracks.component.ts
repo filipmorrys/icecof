@@ -4,6 +4,7 @@ import { TopologyService } from '../topology.service';
 import { WorkOnTrack, TrackTypeEntry, TrackIdEntry, WorkInterval } from './work-on-tracks.model';
 import { ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
+import { WotService } from '../wot-service.service';
 
 @Component({
   selector: 'app-work-on-tracks',
@@ -38,7 +39,8 @@ export class WorkOnTracksComponent implements OnInit {
   @ViewChild('formWorkOnTrack') formWorkOnTrack: ElementRef;
 
   constructor(private issuesService: IssuesService,
-    private topologyService: TopologyService) {
+    private topologyService: TopologyService,
+    private wotService: WotService) {
   }
 
   ngOnInit() {
@@ -66,6 +68,6 @@ export class WorkOnTracksComponent implements OnInit {
   }
 
   saveWorkOnTrack() {
-
+    this.wotService.saveWot(this.workOnTrack);
   }
 }

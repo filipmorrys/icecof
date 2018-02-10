@@ -24,7 +24,8 @@ export class WorkOnTrack {
 export class WorkInterval {
 
     constructor() {
-        this.tracks = [];
+        this.tracksById = [];
+        this.tracksByType = [];
     
     }
 
@@ -39,7 +40,8 @@ export class WorkInterval {
     startNodeInclude: string;
     endNodeInclude: string;
     circAffected: string;
-    tracks: Array<TrackTypeEntry | TrackIdEntry>;
+    tracksByType: Array<TrackTypeEntry>;
+    tracksById: Array<TrackIdEntry>;
 }
 
 

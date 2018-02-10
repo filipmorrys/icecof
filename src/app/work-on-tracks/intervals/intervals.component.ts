@@ -61,7 +61,7 @@ export class IntervalsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.addingInterval) {
+    if (this.addingInterval) {
       this.initWorkInterval();
     }
   }
@@ -72,10 +72,10 @@ export class IntervalsComponent implements OnInit, OnChanges {
   private initWorkInterval() {
     this.interval = new WorkInterval();
     if (this.intervalType === 1) {
-      this.interval.tracks.push(new TrackTypeEntry());
+      this.interval.tracksByType.push(new TrackTypeEntry());
     }
     else {
-      this.interval.tracks.push(new TrackIdEntry());
+      this.interval.tracksById.push(new TrackIdEntry());
     }
   }
 
@@ -118,15 +118,31 @@ export class IntervalsComponent implements OnInit, OnChanges {
     //this.initWorkInterval();
   }
 
-  onCancel(){
+  onCancel() {
     console.log("Intervalo cancelado");
     this.cancelInterval.emit(true);
     //this.formInterval.nativeElement.reset();
   }
+
   /**
    * Obtiene las vías del componente hijo
    */
-  onSelectTracks(ev: Array<TrackIdEntry | TrackTypeEntry>) {
-    this.interval.tracks = ev;
+  onSelectTracksById(ev: Array<TrackIdEntry>) {
+    this.interval.tracksById = ev;
+  }
+
+  /**
+ * Obtiene las vías del componente hijo
+ */
+  onSelectTracksByType(ev: Array<TrackTypeEntry>) {
+    this.interval.tracksByType = ev;
+  }
+
+  isTracksSelected(): boolean {
+    if (this.intervalType === 1) {
+      return this.interval.tracksByType.length === 0;
+    } else {
+      return this.interval.tracksById.length === 0;
+    }
   }
 }

@@ -12,6 +12,7 @@ import { WorkOnTracksComponent } from './work-on-tracks/work-on-tracks.component
 import { AppRoutingModule } from './/app-routing.module';
 import { IntervalsComponent } from './work-on-tracks/intervals/intervals.component';
 import { TrackSelectorComponent } from './work-on-tracks/intervals/track-selector.component';
+import { WotService } from './wot-service.service';
 
 
 @NgModule({
@@ -29,7 +30,7 @@ import { TrackSelectorComponent } from './work-on-tracks/intervals/track-selecto
     ReactiveFormsModule, 
     HttpClientModule, AppRoutingModule
   ],
-  providers: [TopologyService, IssuesService, HttpClientModule],
+  providers: [TopologyService, IssuesService, HttpClientModule, WotService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

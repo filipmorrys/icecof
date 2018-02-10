@@ -29,7 +29,14 @@ export class TrackSelectorComponent implements OnInit, OnChanges {
   /**
    * EventEmitter para emitir la salida del componenten
    */
-  @Output('onSelectTracks') eventEmmiter: EventEmitter<Array<TrackTypeEntry | TrackIdEntry>> = new EventEmitter<Array<TrackTypeEntry | TrackIdEntry>>();
+  @Output('onSelectTracks') eventEmmiterId: EventEmitter<Array<TrackIdEntry>> = new EventEmitter<Array<TrackIdEntry>>();
+
+  /**
+     * EventEmitter para emitir la salida del componenten
+     */
+  @Output('onSelectTypes') eventEmmiterTypes: EventEmitter<Array<TrackTypeEntry>> = new EventEmitter<Array<TrackTypeEntry>>();
+
+
 
   /**
    * Referencia del elemento select de destino
@@ -42,9 +49,15 @@ export class TrackSelectorComponent implements OnInit, OnChanges {
   origSelectedItems: Array<number>;
 
   /**
-   * Todos los valores del combo de destino
+   * Todos los valores del combo de destino por reacks
    */
-  destSelectedItems: Array<TrackTypeEntry | TrackIdEntry>;
+  destSelectedItemsByType: Array<TrackTypeEntry>;
+
+  /**
+   * Todos los valores del combo de destino por id
+   */
+  destSelectedItemsById: Array<TrackIdEntry>;
+
 
   /**
    * Constructor
@@ -54,7 +67,8 @@ export class TrackSelectorComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.origSelectedItems = [];
-    this.destSelectedItems = [];
+    this.destSelectedItemsById = [];
+    this.destSelectedItemsByType = [];
   }
 
   /**
@@ -63,7 +77,8 @@ export class TrackSelectorComponent implements OnInit, OnChanges {
    * @param changes 
    */
   ngOnChanges(changes: SimpleChanges): void {
-    this.destSelectedItems = [];
+    this.destSelectedItemsById = [];
+    this.destSelectedItemsByType = [];
   }
 
   /**
@@ -78,7 +93,6 @@ export class TrackSelectorComponent implements OnInit, OnChanges {
         { id: 3, name: this.getTrackTypeById(3) }
       ];
     } else {
-      console.log(this.tracks);
       return this.tracks;
     }
   }
@@ -112,20 +126,22 @@ export class TrackSelectorComponent implements OnInit, OnChanges {
         continue;
       }
       if (this.intervalTypeBy === 1) {
-        this.destSelectedItems.push({
+        this.destSelectedItemsByType.push({
           trackType: id,
           cutType: cutType
         });
+        // Enviar el evento
+        this.eventEmmiterTypes.emit(this.destSelectedItemsByType);
       } else {
-        this.destSelectedItems.push({
+        this.destSelectedItemsById.push({
           id: id,
           cutType: cutType
         });
+        this.eventEmmiterId.emit(this.destSelectedItemsById);
       }
     }
 
-    // Enviar el evento
-    this.eventEmmiter.emit(this.destSelectedItems);
+
   }
 
   /**
@@ -134,15 +150,21 @@ export class TrackSelectorComponent implements OnInit, OnChanges {
    */
   validateExists(id: number): boolean {
     let item: any;
-    for (item of this.destSelectedItems) {
-
-      if (item.trackType != undefined && item.trackType === id) {
-        return true;
-      } else if (item.id === id) {
-        return true;
+    if (this.intervalTypeBy === 2) {
+      for (item of this.destSelectedItemsById) {
+        if (item.id === id) {
+          return true;
+        }
       }
+      return false;
+    } else {
+      for (item of this.destSelectedItemsByType) {
+        if (item.trackType != undefined && item.trackType === id) {
+          return true;
+        }
+      }
+      return false;
     }
-    return false;
   }
 
   /**
@@ -207,13 +229,21 @@ export class TrackSelectorComponent implements OnInit, OnChanges {
         indexesToDelete.push(i);
       }
     }
+    if (this.intervalTypeBy === 2) {
+      for (let index = indexesToDelete.length - 1; index >= 0; index--) {
+        this.destSelectedItemsById.splice(indexesToDelete[index], 1); // así es como se elimina un elemento
+      }
 
-    for (let index = indexesToDelete.length - 1; index >= 0; index--) {
-      this.destSelectedItems.splice(indexesToDelete[index], 1); // así es como se elimina un elemento
+      // Enviar el evento
+      this.eventEmmiterId.emit(this.destSelectedItemsById);
+    } else {
+      for (let index = indexesToDelete.length - 1; index >= 0; index--) {
+        this.destSelectedItemsByType.splice(indexesToDelete[index], 1); // así es como se elimina un elemento
+      }
+
+      // Enviar el evento
+      this.eventEmmiterTypes.emit(this.destSelectedItemsByType);
     }
-
-    // Enviar el evento
-    this.eventEmmiter.emit(this.destSelectedItems);
 
   }
 }

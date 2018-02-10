@@ -65,11 +65,11 @@
         </select>
       </div>
     </div>
-    <app-track-selector [intervalTypeBy]="intervalType" [tracks]="tracks" (onSelectTracks)="onSelectTracks($event)"></app-track-selector>
+    <app-track-selector [intervalTypeBy]="intervalType" [tracks]="tracks" (onSelectTracks)="onSelectTracksById($event)" (onSelectTypes)="onSelectTracksByType($event)"></app-track-selector>
     <br>
     <div class="row">
       <div class="col">
-        <button class="btn btn-primary" (click)="onSave()" [disabled]="formInterval.invalid ||interval.tracks.length === 0">Guardar</button>
+        <button class="btn btn-primary" (click)="onSave()" [disabled]="formInterval.invalid || isTracksSelected()">Guardar</button>
         <button class="btn btn-primary" (click)="onCancel()">Cancelar</button>
       </div>
     </div>
