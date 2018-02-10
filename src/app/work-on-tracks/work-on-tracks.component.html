@@ -51,8 +51,8 @@
         </select>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
+    <div class="row" *ngIf="workOnTrack.workIntervals.length>0">
+      <div class="col" >
         <table class="table table-bordered" #tableIntervals>
           <thead class="thead">
             <tr>
